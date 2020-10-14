@@ -3,7 +3,7 @@
         <top-bar />
         <side-bar />
         <main-content>
-            <transition name="fade">
+            <transition name="fade" mode="out-in">
                 <router-view />
             </transition>
         </main-content>

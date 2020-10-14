@@ -5,6 +5,7 @@ import {
 // css inject
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/css/style.css"
+import "./assets/css/custom.css"
 import "./assets/css/components.css"
 
 // js inject
