@@ -14,6 +14,11 @@ import "bootstrap/dist/js/bootstrap.min.js"
 import "jquery.nicescroll"
 import "./assets/js/stisla"
 import "./assets/js/scripts"
+import moment from "moment";
+import lodash from "lodash";
+
+window.moment = moment;
+window._ = lodash;
 
 // router
 import Router from './routes/Router';
