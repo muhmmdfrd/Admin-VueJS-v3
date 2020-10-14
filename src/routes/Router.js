@@ -2,7 +2,7 @@ import {
     createRouter,
     createWebHashHistory
 } from "vue-router"
-import BlankPage from "../components/Blank/BlankPage.vue";
+import BlankPage from "../pages/Blank/BlankPage.vue";
 
 const listRoutes = [{
     path: "/blank",
