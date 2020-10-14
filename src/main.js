@@ -3,21 +3,23 @@ import {
 } from 'vue'
 
 // css inject
+import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/css/style.css"
 import "./assets/css/components.css"
-import "bootstrap/dist/css/bootstrap.min.css"
 
 // js inject
-// import "jquery/dist/jquery";
-import "chartjs";
-import "jquery.nicescroll";
-import "popper.js";
-import "bootstrap/dist/js/bootstrap.min.js";
-import "moment";
-import "./assets/js/stisla";
-import "./assets/js/scripts";
+import "jquery/dist/jquery"
+import "popper.js"
+import "bootstrap/dist/js/bootstrap.min.js"
+import "jquery.nicescroll"
+import "./assets/js/stisla"
+import "./assets/js/scripts"
+
+// router
+import Router from './routes/Router';
 
 // main component
 import App from './App.vue'
 
-createApp(App).mount('#app')
+
+createApp(App).use(Router).mount('#app')

@@ -1,5 +1,10 @@
 "use strict";
 
+import $ from 'jquery';
+import jQuery from 'jquery';
+import Chart from 'chartjs/chart.js';
+import Dropzone from 'dropzone';
+
 // ChartJS
 if (window.Chart) {
   Chart.defaults.global.defaultFontFamily = "'Nunito', 'Segoe UI', 'Arial'";
@@ -144,7 +149,7 @@ $(function () {
     return false;
   });
 
-  $(document).on('click', function (e) {
+  $(document).on('click', function () {
     $(".nav-collapse .navbar-nav").removeClass('show');
   });
 
@@ -386,7 +391,7 @@ $(function () {
 
   if (window.CodeMirror) {
     $(".codeeditor").each(function () {
-      let editor = CodeMirror.fromTextArea(this, {
+      let editor = window.CodeMirror.fromTextArea(this, {
         lineNumbers: true,
         theme: "duotone-dark",
         mode: 'javascript',
@@ -493,8 +498,7 @@ $(function () {
 
     me.click(function () {
       if (!me.hasClass('active')) {
-        var tab_group = $('[data-tab-group="' + me.data('tab') + '"]'),
-          tab_group_active = $('[data-tab-group="' + me.data('tab') + '"].active'),
+        var tab_group_active = $('[data-tab-group="' + me.data('tab') + '"].active'),
           target = $(me.attr('href')),
           links = $('[data-tab="' + me.data('tab') + '"]');
 
@@ -526,10 +530,9 @@ $(function () {
     });
   });
 
-  if ($('.main-navbar').length) {}
 
   // Image cropper
-  $('[data-crop-image]').each(function (e) {
+  $('[data-crop-image]').each(function () {
     $(this).css({
       overflow: 'hidden',
       position: 'relative',

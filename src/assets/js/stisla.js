@@ -1,9 +1,16 @@
 "use strict";
 
-(function ($, window, i) {
+import $ from 'jquery';
+import jQuery from 'jquery';
+
+import {
+  moment
+} from "moment";
+
+(function (i) {
   // Bootstrap 4 Modal
   $.fn.fireModal = function (options) {
-    var options = $.extend({
+    options = $.extend({
       size: 'modal-md',
       center: false,
       animation: true,
@@ -25,8 +32,7 @@
     this.each(function () {
       i++;
       var id = 'fire-modal-' + i,
-        trigger_class = 'trigger--' + id,
-        trigger_button = $('.' + trigger_class);
+        trigger_class = 'trigger--' + id;
 
       $(this).addClass(trigger_class);
 
@@ -68,7 +74,7 @@
         '  </div>  ';
 
       // Convert modal to object
-      var modal_template = $(modal_template);
+      modal_template = $(modal_template);
 
       // Start creating buttons from 'buttons' option
       var this_button;
@@ -175,7 +181,7 @@
 
   // Card Progress Controller
   $.cardProgress = function (card, options) {
-    var options = $.extend({
+    options = $.extend({
       dismiss: false,
       dismissText: 'Cancel',
       spinner: true,
@@ -215,7 +221,7 @@
   }
 
   $.chatCtrl = function (element, chat) {
-    var chat = $.extend({
+    chat = $.extend({
       position: 'chat-right',
       text: '',
       time: moment(new Date().toISOString()).format('hh:mm'),
@@ -226,7 +232,7 @@
     }, chat);
 
     var target = $(element),
-      element = '<div class="chat-item ' + chat.position + '" style="display:none">' +
+      elements = '<div class="chat-item ' + chat.position + '" style="display:none">' +
       '<img src="' + chat.picture + '">' +
       '<div class="chat-details">' +
       '<div class="chat-text">' + chat.text + '</div>' +
@@ -240,7 +246,7 @@
       '</div>' +
       '</div>';
 
-    var append_element = element;
+    var append_element = elements;
     if (chat.type == 'typing') {
       append_element = typing_element;
     }
