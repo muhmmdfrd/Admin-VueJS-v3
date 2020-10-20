@@ -2,7 +2,9 @@ import {
     createRouter,
     createWebHashHistory
 } from "vue-router"
+
 import BlankPage from "../pages/Blank/BlankPage.vue";
+import DashboardPage from "../pages/Dashboard/DashboardPage.vue";
 
 const listRoutes = [{
     path: "/blank",
@@ -11,9 +13,7 @@ const listRoutes = [{
 }, {
     path: "/",
     name: "home",
-    component: {
-        template: `<div>Home</div>`
-    }
+    component: DashboardPage
 }];
 
 const Routes = new createRouter({

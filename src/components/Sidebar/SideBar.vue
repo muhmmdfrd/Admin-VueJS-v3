@@ -8,6 +8,7 @@
                 <router-link to="/">Stisla</router-link>
             </div>
             <ul class="sidebar-menu">
+                <li class="menu-header">Dashboard</li>
                 <li>
                     <router-link class="nav-link" to="/">
                         <i class="fas fa-fire"></i>
