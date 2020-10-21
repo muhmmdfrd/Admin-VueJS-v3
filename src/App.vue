@@ -3,9 +3,7 @@
         <top-bar />
         <side-bar />
         <main-content>
-            <transition name="fade" mode="out-in">
-                <router-view />
-            </transition>
+            <router-view />
         </main-content>
         <footer-component />
     </main-wrapper>

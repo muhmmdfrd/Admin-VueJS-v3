@@ -1,18 +1,20 @@
 <template>
-    <title-header title="Dashboard" />
-
-    <div class="row">
-        <div
-            class="col-lg-3 col-md-6 col-sm-6 col-12"
-            v-for="(card, index) in listCard"
-            :key="index"
-        >
-            <general-card
-                :title="card.title"
-                :value="card.value"
-                :icon="card.icon"
-                :theme="card.theme"
-            />
+    <loading-component v-show="isLoading" />
+    <div v-show="!isLoading">
+        <title-header title="Dashboard" />
+        <div class="row">
+            <div
+                class="col-lg-3 col-md-6 col-sm-6 col-12"
+                v-for="(card, index) in listCard"
+                :key="index"
+            >
+                <general-card
+                    :title="card.title"
+                    :value="card.value"
+                    :icon="card.icon"
+                    :theme="card.theme"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -20,10 +22,11 @@
 <script>
 import GeneralCard from "../../components/Card/General/GeneralCard.vue";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
+import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 
 export default {
     name: "DashboardPage",
-    data: () => {
+    data: function() {
         return {
             listCard: [
                 {
@@ -51,11 +54,19 @@ export default {
                     theme: "info",
                 },
             ],
+            isLoading: true,
         };
     },
     components: {
         GeneralCard,
         TitleHeader,
+        LoadingComponent,
+    },
+    mounted: function() {
+        const vm = this;
+        setTimeout(function() {
+            vm.isLoading = false;
+        }, 5000);
     },
 };
 </script>

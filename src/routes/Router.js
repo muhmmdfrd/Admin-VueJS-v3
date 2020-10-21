@@ -5,6 +5,7 @@ import {
 
 import BlankPage from "../pages/Blank/BlankPage.vue";
 import DashboardPage from "../pages/Dashboard/DashboardPage.vue";
+import LoadingComponent from "../components/Loading/LoadingComponent.vue";
 
 const listRoutes = [{
     path: "/blank",
@@ -14,6 +15,10 @@ const listRoutes = [{
     path: "/",
     name: "home",
     component: DashboardPage
+}, {
+    path: "/loading",
+    name: "loading",
+    component: LoadingComponent
 }];
 
 const Routes = new createRouter({

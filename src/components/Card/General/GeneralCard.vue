@@ -22,7 +22,7 @@ export default {
             type: String,
         },
         value: {
-            type: Int16Array,
+            type: Number,
         },
         icon: {
             type: String,
