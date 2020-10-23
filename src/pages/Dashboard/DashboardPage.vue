@@ -5,7 +5,7 @@
         <div class="row">
             <div
                 class="col-lg-3 col-md-6 col-sm-6 col-12"
-                v-for="(card, index) in listCard"
+                v-for="(card, index) in list"
                 :key="index"
             >
                 <general-card
@@ -20,40 +20,19 @@
 </template>
 
 <script>
+import { inject } from "vue";
 import GeneralCard from "../../components/Card/General/GeneralCard.vue";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 
 export default {
     name: "DashboardPage",
+    setup: function() {
+        const list = inject("dashboard");
+        return { list };
+    },
     data: function() {
         return {
-            listCard: [
-                {
-                    title: "Total Admin",
-                    value: 10,
-                    icon: "user",
-                    theme: "primary",
-                },
-                {
-                    title: "News",
-                    value: 42,
-                    icon: "newspaper",
-                    theme: "danger",
-                },
-                {
-                    title: "Report",
-                    value: 1201,
-                    icon: "file",
-                    theme: "warning",
-                },
-                {
-                    title: "Online Users",
-                    value: 47,
-                    icon: "circle",
-                    theme: "info",
-                },
-            ],
             isLoading: true,
         };
     },

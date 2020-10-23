@@ -4,11 +4,11 @@
 }
 
 .loader {
-    border: 16px solid #ddd;
+    border: 10px solid #ddd;
     border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
+    border-top: 10px solid #42b833;
+    width: 90px;
+    height: 90px;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
     margin-right: 15%;
