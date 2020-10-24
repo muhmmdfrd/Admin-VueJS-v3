@@ -3,8 +3,14 @@ import axios from 'axios';
 
 const baseurl = 'https://jsonplaceholder.typicode.com/';
 
-const httpRequest = function (method, path, data = {}, type = 'application/x-www-form-urlencoded') {
+const httpRequest = function (params) {
     const deferred = new defer();
+    const {
+        method,
+        path,
+        data,
+        type
+    } = params;
 
     axios({
         method: method,

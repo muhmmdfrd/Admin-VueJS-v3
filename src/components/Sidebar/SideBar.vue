@@ -8,46 +8,29 @@
                 <router-link to="/">Stisla</router-link>
             </div>
             <ul class="sidebar-menu">
+                <!-- dashboard -->
                 <title-menu-sidebar title="Dashboard" />
                 <menu-sidebar
                     path="/"
                     icon="tachometer-alt"
                     menuName="Dashboard"
                 />
+                <!-- end of dashboard -->
 
+                <!-- layout -->
                 <title-menu-sidebar title="Starter" />
-                <li class="nav-item dropdown">
-                    <a
-                        href="#"
-                        class="nav-link has-dropdown"
-                        data-toggle="dropdown"
-                        ><i class="fas fa-columns"></i> <span>Layout</span></a
-                    >
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="nav-link" href="layout-default.html"
-                                >Default Layout</a
-                            >
-                        </li>
-                        <li>
-                            <a class="nav-link" href="layout-transparent.html"
-                                >Transparent Sidebar</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                href="layout-top-navigation.html"
-                                >Top Navigation</a
-                            >
-                        </li>
-                    </ul>
-                </li>
                 <menu-sidebar
                     path="/blank"
                     icon="square"
                     menuName="Blank Page"
                 />
+                <dropdown-sidebar icon="columns" title="Layout">
+                    <dropdown-menu
+                        path="/layout/default"
+                        title="Default Layout"
+                    />
+                </dropdown-sidebar>
+                <!-- end of layout -->
             </ul>
         </aside>
     </div>
@@ -56,12 +39,16 @@
 <script>
 import MenuSidebar from "./MenuSidebar.vue";
 import TitleMenuSidebar from "./TitleMenuSidebar.vue";
+import DropdownSidebar from "./DropdownSidebar.vue";
+import DropdownMenu from "./DropdownMenu.vue";
 
 export default {
     name: "SideBar",
     components: {
         MenuSidebar,
         TitleMenuSidebar,
+        DropdownMenu,
+        DropdownSidebar,
     },
 };
 </script>
