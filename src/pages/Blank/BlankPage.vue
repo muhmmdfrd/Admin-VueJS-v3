@@ -3,6 +3,7 @@
         <loading-component v-show="isLoading" />
         <div v-show="!isLoading">
             <title-header :title="user" />
+            <example-table />
         </div>
     </div>
 </template>
@@ -10,6 +11,7 @@
 <script>
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
+import ExampleTable from "../../components/Table/ExampleTable.vue";
 import { inject } from "vue";
 
 export default {
@@ -24,6 +26,7 @@ export default {
     components: {
         TitleHeader,
         LoadingComponent,
+        ExampleTable,
     },
     data: function() {
         return {
