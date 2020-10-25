@@ -1,5 +1,8 @@
 # admin-app-vue
 
+## Demo (for a while)
+[link for demo](https://admin-dlhk-dev.web.app)
+
 ## Project setup
 ```
 npm install
