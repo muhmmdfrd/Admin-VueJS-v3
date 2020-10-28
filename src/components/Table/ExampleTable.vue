@@ -3,47 +3,79 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Basic DataTables</h4>
+                    <h4>Advanced Table</h4>
+                    <div class="card-header-form">
+                        <form>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Search by Task Name"
+                                />
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="table-1">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">
-                                        #
-                                    </th>
-                                    <th>Task Name</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(value, index) in data" :key="index">
-                                    <td>
-                                        {{ index + 1 }}
-                                    </td>
-                                    <td>{{ value.message }}</td>
-                                    <td>{{ value.date }}</td>
-                                    <td>
-                                        <div
-                                            :class="
-                                                `badge badge-${value.label}`
-                                            "
-                                        >
-                                            {{ value.status }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-secondary"
-                                            >Detail</a
-                                        >
-                                    </td>
-                                </tr>
-                            </tbody>
+                        <table class="table table-striped">
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th colspan="2" class="text-center">Action</th>
+                            </tr>
+                            <tr v-for="(value, index) in data" :key="index">
+                                <td class="p-0 text-center">{{ index + 1 }}</td>
+                                <td>{{ value.name }}</td>
+                                <td>{{ value.email }}</td>
+                                <td>
+                                    <div class="badge badge-success">
+                                        online
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <button
+                                        class="btn btn-info mr-1"
+                                        @click="action(value.name)"
+                                    >
+                                        Detail
+                                    </button>
+                                    <button
+                                        class="btn btn-danger ml-1"
+                                        @click="action(value.name)"
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
                         </table>
                     </div>
+                </div>
+                <div class="card-footer text-right">
+                    <nav class="d-inline-block">
+                        <ul class="pagination mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1"
+                                    ><i class="fas fa-chevron-left"></i
+                                ></a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"
+                                    ><i class="fas fa-chevron-right"></i
+                                ></a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -51,38 +83,15 @@
 </template>
 
 <script>
-import { ref } from "vue";
 export default {
     name: "ExampleTable",
-    setup: function() {
-        const data = ref([
-            {
-                message: "Create a mobile app",
-                date: "20-01-2020",
-                label: "success",
-                status: "Completed",
-            },
-            {
-                message: "Redesign homepage",
-                date: "20-04-2020",
-                label: "info",
-                status: "Todo",
-            },
-            {
-                message: "Backup database",
-                date: "21-04-2020",
-                label: "warning",
-                status: "In Progress",
-            },
-            {
-                message: "Input data",
-                date: "16-01-2020",
-                label: "success",
-                status: "Completed",
-            },
-        ]);
-
-        return { data };
+    props: {
+        data: {
+            type: Array,
+        },
+        action: {
+            type: Function,
+        },
     },
 };
 </script>

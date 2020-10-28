@@ -2,8 +2,8 @@
     <div>
         <loading-component v-show="isLoading" />
         <div v-show="!isLoading">
-            <title-header :title="user" />
-            <example-table />
+            <title-header title="Blank Page" />
+            <example-table :data="data" :action="detail" />
         </div>
     </div>
 </template>
@@ -12,32 +12,37 @@
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import ExampleTable from "../../components/Table/ExampleTable.vue";
-import { inject } from "vue";
+import httpRequest from "../../services/IndexService";
 
 export default {
     name: "BlankPage",
-    setup: function() {
-        const user = inject("name");
-
-        return {
-            user,
-        };
-    },
     components: {
         TitleHeader,
         LoadingComponent,
         ExampleTable,
     },
     data: function() {
-        return {
-            isLoading: true,
-        };
+        return { data: [], isLoading: true };
+    },
+    methods: {
+        detail: (name) => {
+            alert(name);
+        },
     },
     mounted: function() {
-        const vm = this;
-        setTimeout(function() {
-            vm.isLoading = false;
-        }, 5000);
+        var vm = this;
+        httpRequest({
+            method: "GET",
+            path: "users/?_limit=5",
+            data: {},
+            type: "application/json",
+        })
+            .then(function(response) {
+                vm.data = response.data;
+            })
+            .finally(function() {
+                vm.isLoading = false;
+            });
     },
 };
 </script>

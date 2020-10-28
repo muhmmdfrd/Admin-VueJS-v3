@@ -20,17 +20,12 @@
 </template>
 
 <script>
-import { inject } from "vue";
 import GeneralCard from "../../components/Card/General/GeneralCard.vue";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 
 export default {
     name: "DashboardPage",
-    setup: function() {
-        const list = inject("dashboard");
-        return { list };
-    },
     data: function() {
         return {
             isLoading: true,

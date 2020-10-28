@@ -17,6 +17,7 @@ import "./assets/js/stisla"
 import "./assets/js/scripts"
 import moment from "moment";
 import lodash from "lodash";
+import "./assets/js/page/modules-datatables";
 
 window.moment = moment;
 window._ = lodash;
