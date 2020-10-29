@@ -3,24 +3,12 @@
     <div v-show="!isLoading">
         <title-header title="Dashboard" />
         <div class="row">
-            <div
-                class="col-lg-3 col-md-6 col-sm-6 col-12"
-                v-for="(card, index) in list"
-                :key="index"
-            >
-                <general-card
-                    :title="card.title"
-                    :value="card.value"
-                    :icon="card.icon"
-                    :theme="card.theme"
-                />
-            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12"></div>
         </div>
     </div>
 </template>
 
 <script>
-import GeneralCard from "../../components/Card/General/GeneralCard.vue";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 
@@ -32,7 +20,6 @@ export default {
         };
     },
     components: {
-        GeneralCard,
         TitleHeader,
         LoadingComponent,
     },
@@ -40,7 +27,7 @@ export default {
         const vm = this;
         setTimeout(function() {
             vm.isLoading = false;
-        }, 5000);
+        }, 2000);
     },
 };
 </script>

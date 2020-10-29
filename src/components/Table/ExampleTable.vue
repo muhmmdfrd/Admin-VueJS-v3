@@ -27,17 +27,19 @@
                             <tr>
                                 <th class="text-center">#</th>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>Username</th>
                                 <th>Username</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                             <tr v-for="(value, index) in data" :key="index">
                                 <td class="p-0 text-center">{{ index + 1 }}</td>
-                                <td>{{ value.name }}</td>
-                                <td>{{ value.email }}</td>
+                                <td>{{ value.Name }}</td>
+                                <td>{{ value.Username }}</td>
                                 <td>
                                     <div class="badge badge-success">
-                                        online
+                                        {{
+                                            value.Status ? "online" : "offline"
+                                        }}
                                     </div>
                                 </td>
                                 <td class="text-center">

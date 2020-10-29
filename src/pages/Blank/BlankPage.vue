@@ -12,7 +12,9 @@
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import ExampleTable from "../../components/Table/ExampleTable.vue";
-import httpRequest from "../../services/IndexService";
+import UtilHelper from "../../helpers/UtilHelper";
+
+const helper = new UtilHelper();
 
 export default {
     name: "BlankPage",
@@ -29,20 +31,16 @@ export default {
             alert(name);
         },
     },
-    mounted: function() {
+    mounted: async function() {
         var vm = this;
-        httpRequest({
-            method: "GET",
-            path: "users/?_limit=5",
-            data: {},
-            type: "application/json",
-        })
-            .then(function(response) {
-                vm.data = response.data;
-            })
-            .finally(function() {
-                vm.isLoading = false;
-            });
+        try {
+            let result = await helper.getData();
+            vm.data.push(await result.data());
+        } catch (err) {
+            console.log(err);
+        } finally {
+            vm.isLoading = false;
+        }
     },
 };
 </script>

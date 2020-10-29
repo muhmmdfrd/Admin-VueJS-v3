@@ -6,11 +6,15 @@
 </template>
 
 <script>
+import UtilHelper from "../../helpers/UtilHelper";
+
+const helper = new UtilHelper();
+
 export default {
     name: "FooterComponent",
     data: function() {
         return {
-            year: window.moment().year(),
+            year: helper.dateNow().year(),
         };
     },
 };

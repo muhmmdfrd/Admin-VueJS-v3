@@ -15,11 +15,9 @@ import "bootstrap/dist/js/bootstrap.min.js"
 import "jquery.nicescroll"
 import "./assets/js/stisla"
 import "./assets/js/scripts"
-import moment from "moment";
 import lodash from "lodash";
 import "./assets/js/page/modules-datatables";
 
-window.moment = moment;
 window._ = lodash;
 
 // router
@@ -27,6 +25,5 @@ import Router from './routes/Router';
 
 // main component
 import App from './App.vue'
-
 
 createApp(App).use(Router).mount('#app')

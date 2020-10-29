@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const baseurl = 'https://jsonplaceholder.typicode.com/';
 
-const httpRequest = function (params) {
+export default function httpRequest(params) {
     const deferred = new defer();
     const {
         method,
@@ -34,5 +34,3 @@ const httpRequest = function (params) {
 
     return deferred.promise;
 }
-
-export default httpRequest;
