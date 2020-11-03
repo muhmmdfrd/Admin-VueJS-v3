@@ -3,7 +3,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Advanced Table</h4>
+                    <h4>
+                        <button class="btn btn-success" @click="formAddData()">
+                            Add
+                        </button>
+                    </h4>
                     <div class="card-header-form">
                         <form>
                             <div class="input-group">
@@ -12,11 +16,6 @@
                                     class="form-control"
                                     placeholder="Search by Task Name"
                                 />
-                                <div class="input-group-btn">
-                                    <button class="btn btn-primary">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -28,30 +27,28 @@
                                 <th class="text-center">#</th>
                                 <th>Name</th>
                                 <th>Username</th>
-                                <th>Username</th>
+                                <th>Status</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                             <tr v-for="(value, index) in data" :key="index">
                                 <td class="p-0 text-center">{{ index + 1 }}</td>
-                                <td>{{ value.Name }}</td>
-                                <td>{{ value.Username }}</td>
+                                <td>{{ value.name }}</td>
+                                <td>{{ value.username }}</td>
                                 <td>
                                     <div class="badge badge-success">
-                                        {{
-                                            value.Status ? "online" : "offline"
-                                        }}
+                                        online
                                     </div>
                                 </td>
                                 <td class="text-center">
                                     <button
                                         class="btn btn-info mr-1"
-                                        @click="action(value.name)"
+                                        @click="detail(value.id)"
                                     >
                                         Detail
                                     </button>
                                     <button
                                         class="btn btn-danger ml-1"
-                                        @click="action(value.name)"
+                                        @click="deleteData(value.name)"
                                     >
                                         Delete
                                     </button>
@@ -89,10 +86,18 @@ export default {
     name: "ExampleTable",
     props: {
         data: {
-            type: Array,
+            type: [],
         },
-        action: {
+        deleteData: {
             type: Function,
+        },
+        detail: {
+            type: Function,
+        },
+    },
+    methods: {
+        formAddData: () => {
+            window.router.push("/blank/0");
         },
     },
 };

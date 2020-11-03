@@ -23,6 +23,8 @@ window._ = lodash;
 // router
 import Router from './routes/Router';
 
+window.router = Router;
+
 // main component
 import App from './App.vue'
 

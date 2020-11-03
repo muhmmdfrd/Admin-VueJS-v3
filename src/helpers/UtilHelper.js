@@ -1,8 +1,6 @@
 import moment from "moment";
-import {
-    database
-} from "../configurations/firebaseConfig";
 import defer from "deferred";
+import httpRequest from "../services/IndexService";
 
 export default class UtilHelper {
     constructor() {
@@ -13,29 +11,43 @@ export default class UtilHelper {
         return moment();
     }
 
-    getData() {
+    getParamsId() {
+        const href = window.location.hash;
+        const params = href.split('/');
+        return params.pop();
+    }
+
+    getData(url) {
         const deferred = new defer();
-        const {
-            resolve,
-            reject,
-            promise
-        } = deferred;
 
-        database
-            .collection("account")
-            .doc("BzRGoFJ2BRd6FCZgapbu")
-            .get()
-            .then(function (response) {
-                if (response.exists) {
-                    resolve(response);
-                }
-            }, function (response) {
-                reject(response);
-            })
-            .catch(function (err) {
-                console.log(err);
-            })
+        httpRequest({
+            method: 'GET',
+            path: url,
+            data: {},
+            type: 'application/json'
+        }).then(function (response) {
+            deferred.resolve(response);
+        }, function (response) {
+            deferred.reject(response);
+        });
 
-        return promise;
+        return deferred.promise;
+    }
+
+    addData(url, data) {
+        const deferred = new defer();
+
+        httpRequest({
+            method: 'POST',
+            path: url,
+            data: data,
+            type: 'application/jon'
+        }).then(function (response) {
+            deferred.resolve(response)
+        }, function (response) {
+            deferred.reject(response)
+        });
+
+        return deferred.promise;
     }
 }
