@@ -1,4 +1,4 @@
-<template>
+<template :key="componentKey">
     <div>
         <loading-component v-show="isLoading" />
         <div v-show="!isLoading">
@@ -16,9 +16,10 @@
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import ExampleTable from "../../components/Table/ExampleTable.vue";
-import UtilHelper from "../../helpers/UtilHelper";
+import AlertHelper from "../../helpers/AlertHelper";
+import httpRequest from "../../services/IndexService";
 
-const helper = new UtilHelper();
+const alert = new AlertHelper();
 
 export default {
     name: "BlankPage",
@@ -31,24 +32,38 @@ export default {
         return { data: [], isLoading: true };
     },
     methods: {
-        detail: (id) => {
-            window.router.push(`/blank/${id}`);
+        async getData() {
+            const vm = this;
+            const requestData = {
+                token: "kmzwa8awaa",
+                method: "PersonGetAll",
+            };
+
+            httpRequest(requestData)
+                .then(function(response) {
+                    const data = response.data.d;
+
+                    if (data.Success) {
+                        vm.data = data.Values;
+                    } else {
+                        alert.error(data.Message);
+                    }
+                })
+                .finally(function() {
+                    vm.isLoading = false;
+                });
+        },
+        detail(id) {
+            window.router.push(`blank/${id}`);
+        },
+        async deletebyId(id) {
+            alert.confirm();
             console.log(id);
         },
-        deletebyId: (id) => {
-            alert(id);
-        },
     },
-    mounted: async function() {
-        var vm = this;
-        helper
-            .getData("users?_limit=5")
-            .then(function(response) {
-                vm.data = response.data;
-            })
-            .finally(function() {
-                vm.isLoading = false;
-            });
+    mounted: function() {
+        const vm = this;
+        vm.getData();
     },
 };
 </script>

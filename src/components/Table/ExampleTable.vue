@@ -15,6 +15,7 @@
                                     type="text"
                                     class="form-control"
                                     placeholder="Search by Task Name"
+                                    id="customSearch"
                                 />
                             </div>
                         </form>
@@ -26,14 +27,14 @@
                             <tr>
                                 <th class="text-center">#</th>
                                 <th>Name</th>
-                                <th>Username</th>
+                                <th>Age</th>
                                 <th>Status</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                             <tr v-for="(value, index) in data" :key="index">
                                 <td class="p-0 text-center">{{ index + 1 }}</td>
-                                <td>{{ value.name }}</td>
-                                <td>{{ value.username }}</td>
+                                <td>{{ value.Name }}</td>
+                                <td>{{ value.Age }}</td>
                                 <td>
                                     <div class="badge badge-success">
                                         online
@@ -42,13 +43,13 @@
                                 <td class="text-center">
                                     <button
                                         class="btn btn-info mr-1"
-                                        @click="detail(value.id)"
+                                        @click="detail(value.Id)"
                                     >
                                         Detail
                                     </button>
                                     <button
                                         class="btn btn-danger ml-1"
-                                        @click="deleteData(value.name)"
+                                        @click="deleteData(value.Id)"
                                     >
                                         Delete
                                     </button>
@@ -97,8 +98,14 @@ export default {
     },
     methods: {
         formAddData: () => {
-            window.router.push("/blank/0");
+            window.router.push("/admin/blank/0");
         },
     },
 };
 </script>
+
+<style scoped>
+#customSearch {
+    border-radius: 30px 30px 30px 30px !important;
+}
+</style>

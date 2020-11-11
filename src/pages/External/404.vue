@@ -6,11 +6,6 @@
                 <div class="page-description">
                     The page you were looking for could not be found.
                 </div>
-                <div class="page-search">
-                    <div class="mt-3">
-                        <router-link to="/">Back to Dashboard</router-link>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -1,56 +1,64 @@
 <template>
     <loading-component v-show="isLoading" />
     <div class="card">
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation">
             <div class="card-header">
-                <h4>{{ getFormStatus }} data</h4>
+                <div class="col-md-6">
+                    <button
+                        class="btn btn-info float-left"
+                        @click.prevent="back()"
+                    >
+                        Back
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="float-right text-primary">
+                        {{ getFormStatus }} data
+                    </h6>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label>Your Name</label>
+                            <label>Name</label>
                             <input
                                 type="text"
                                 class="form-control"
                                 required
                                 v-model="name"
-                            />
-                            <div class="invalid-feedback">
-                                What's your name?
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                required
-                                v-model="user"
+                                tabindex="1"
                             />
                             <div class="invalid-feedback">
                                 Oh no! Username is invalid.
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label>Status</label>
-                            <select class="form-control" v-model="status">
-                                <option value="" disabled>Select Status</option>
-                                <option value="1">Online</option>
-                                <option value="0">Offline</option>
-                            </select>
+                            <label>Age</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                required
+                                v-model="age"
+                                tabindex="2"
+                            />
+                            <div class="invalid-feedback">
+                                What's your Password?
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-footer text-right">
-                <button class="btn btn-info" @click.prevent="addData">
-                    Submit
-                </button>
+                <input
+                    type="submit"
+                    class="btn btn-info"
+                    value="Submit"
+                    tabindex="3"
+                    @click="submit()"
+                />
             </div>
         </form>
     </div>
@@ -59,29 +67,70 @@
 <script>
 import UtilHelper from "../../helpers/UtilHelper";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
+import AlertHelper from "../../helpers/AlertHelper";
+import httpRequest from "../../services/IndexService";
 
 const helper = new UtilHelper();
+const alert = new AlertHelper();
 
 export default {
     name: "BlankFormPage",
     methods: {
-        addData() {
+        back() {
+            window.router.back();
+        },
+        getParamsId() {
+            return helper.getParamsId();
+        },
+        submit() {
             const vm = this;
-            const data = {
-                name: vm.name,
-                username: vm.user,
-                id: Math.floor(Math.random * 10) + 1,
-            };
 
+            if (
+                !helper.validateModel(vm.password) ||
+                !helper.validateModel(vm.user)
+            ) {
+                alert.error("Please fill all form!");
+            } else {
+                const data = {
+                    username: vm.user,
+                    password: vm.password,
+                    id: this.id,
+                };
+
+                this.id == "0" ? this.addData(data) : this.editData(data);
+            }
+        },
+        async editData(data) {
+            const vm = this;
+
+            helper
+                .updateData("users", data)
+                .then(function() {
+                    vm.isLoading = true;
+                })
+                .catch(function(err) {
+                    alert.error(err);
+                })
+                .finally(function() {
+                    vm.isLoading = false;
+                    alert.success("Data Updated");
+                    window.router.push("/blank");
+                });
+        },
+        async addData(data) {
+            const vm = this;
             helper
                 .addData("users", data)
                 .then(function() {
                     vm.isLoading = true;
                 })
+                .catch(function(err) {
+                    alert.error(err);
+                })
                 .finally(function() {
                     vm.isLoading = false;
-                    alert("success");
-                    window.router.push("/blank");
+                    alert.success("Data Created");
+                    this.back();
                 });
         },
     },
@@ -89,15 +138,41 @@ export default {
         return {
             status: "",
             isLoading: false,
+            id: "",
         };
     },
     computed: {
         getFormStatus() {
-            return helper.getParamsId() == "0" ? "Add" : "Edit";
+            return this.id == "0" ? "Add" : "Edit";
         },
     },
     components: {
         LoadingComponent,
+    },
+    mounted: function() {
+        const vm = this;
+        vm.id = vm.getParamsId();
+
+        if (vm.getParamsId() != "0") {
+            vm.isLoading = true;
+            httpRequest({ method: "PersonGetAll", token: "kmzwaia" })
+                .then(function(response) {
+                    const data = response.data.d;
+                    if (data.Success) {
+                        const { Name, Age } = data.Values.shift();
+                        vm.name = Name;
+                        vm.age = Age;
+                    } else {
+                        alert.error(data.Message);
+                    }
+                })
+                .catch(function(err) {
+                    alert.error(err);
+                })
+                .finally(function() {
+                    vm.isLoading = false;
+                });
+        }
     },
 };
 </script>

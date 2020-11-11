@@ -1,5 +1,7 @@
 @charset "UTF-8";
 @import url("//fonts.googleapis.com/css?family=Nunito:400,600,700,800");
+@import "../../../node_modules/toastr/toastr.scss";
+
 .btn:focus,
 .btn:active,
 .btn:active:focus,

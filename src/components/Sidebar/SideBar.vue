@@ -2,16 +2,16 @@
     <div class="main-sidebar">
         <aside id="sidebar-wrapper">
             <div class="sidebar-brand">
-                <router-link to="/">Stisla</router-link>
+                <router-link to="/admin/dashboard">Stisla</router-link>
             </div>
             <div class="sidebar-brand sidebar-brand-sm">
-                <router-link to="/">Stisla</router-link>
+                <router-link to="/admin/dashboard">Stisla</router-link>
             </div>
             <ul class="sidebar-menu">
                 <!-- dashboard -->
                 <title-menu-sidebar title="Dashboard" />
                 <menu-sidebar
-                    path="/"
+                    path="/admin/dashboard"
                     icon="tachometer-alt"
                     menuName="Dashboard"
                 />
@@ -20,7 +20,7 @@
                 <!-- layout -->
                 <title-menu-sidebar title="Starter" />
                 <menu-sidebar
-                    path="/blank"
+                    path="/admin/blank"
                     icon="square"
                     menuName="Blank Page"
                 />

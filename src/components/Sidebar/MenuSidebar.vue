@@ -1,6 +1,6 @@
 <template>
     <li>
-        <router-link class="nav-link" :to="path">
+        <router-link class="nav-link" :to="path" exact="true">
             <i :class="`fas fa-${icon}`"></i>
             <span>{{ menuName }}</span>
         </router-link>

@@ -26,6 +26,6 @@ import Router from './routes/Router';
 window.router = Router;
 
 // main component
-import App from './App.vue'
+import Index from "./Index.vue";
 
-createApp(App).use(Router).mount('#app')
+createApp(Index).use(Router).mount('#app')

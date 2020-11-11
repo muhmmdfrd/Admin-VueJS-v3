@@ -3,7 +3,7 @@
         <top-bar />
         <side-bar />
         <main-content>
-            <router-view />
+            <router-view name="admin" />
         </main-content>
         <footer-component />
     </main-wrapper>

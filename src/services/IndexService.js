@@ -1,29 +1,24 @@
 import defer from "deferred";
 import axios from 'axios';
 
-const baseurl = 'https://jsonplaceholder.typicode.com/';
+const baseurl = 'http://ws.first.local/MathService.asmx/Call';
 
-export default function httpRequest(params) {
+export default function httpRequest(data) {
     const deferred = new defer();
-    const {
-        method,
-        path,
-        data,
-        type
-    } = params;
 
     axios({
-        method: method,
-        url: baseurl + path,
+        method: 'POST',
+        url: baseurl,
         timeout: deferred.promise,
+        data: {
+            data
+        },
         header: {
             'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': method,
+            'Access-Control-Allow-Methods': 'POST',
             'Access-Control-Allow-Headers': 'application/json',
-            'Content-Type': type,
+            'Content-Type': 'application/json; charset=utf-8',
         },
-        data: data
     }).then(function (response) {
             deferred.resolve(response);
         },
