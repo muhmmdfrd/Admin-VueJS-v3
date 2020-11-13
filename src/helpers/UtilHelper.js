@@ -1,6 +1,4 @@
 import moment from "moment";
-import defer from "deferred";
-import httpRequest from "../services/IndexService";
 
 export default class UtilHelper {
     constructor() {
@@ -21,88 +19,13 @@ export default class UtilHelper {
         return params.pop();
     }
 
-    getData(url) {
-        const deferred = new defer();
-
-        httpRequest({
-            method: 'GET',
-            path: url,
-            data: {},
-            type: 'application/json'
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (response) {
-            deferred.reject(response);
-        });
-
-        return deferred.promise;
+    epochToDate(date) {
+        let timestamp = parseInt(date.replace(/[^0-9]/g, ""));
+        return moment(timestamp).format("DD-MM-YYYY");
     }
 
-    getDataId(url, id) {
-        const deferred = new defer();
-
-        httpRequest({
-            method: 'GET',
-            path: url + '/' + id,
-            data: {},
-            type: 'application/json'
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (response) {
-            deferred.reject(response);
-        });
-
-        return deferred.promise;
-    }
-
-    addData(url, data) {
-        const deferred = new defer();
-
-        httpRequest({
-            method: 'POST',
-            path: url,
-            data: data,
-            type: 'application/jon'
-        }).then(function (response) {
-            deferred.resolve(response)
-        }, function (response) {
-            deferred.reject(response)
-        });
-
-        return deferred.promise;
-    }
-
-    updateData(url, data) {
-        const deferred = new defer();
-
-        httpRequest({
-            method: 'PUT',
-            path: url,
-            data: data,
-            type: 'application/json'
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (response) {
-            deferred.reject(response);
-        });
-
-        return deferred.promise;
-    }
-
-    deleteData(url, id) {
-        const deferred = new defer();
-
-        httpRequest({
-            method: 'DELETE',
-            path: url + id,
-            data: {},
-            type: 'application/json'
-        }).then(function (response) {
-            deferred.resolve(response);
-        }, function (response) {
-            deferred.reject(response);
-        });
-
-        return deferred.promise;
+    epochToSqlDate(date) {
+        let timestamp = parseInt(date.replace(/[^0-9]/g, ""));
+        return moment(timestamp).format("YYYY-MM-DD");
     }
 }

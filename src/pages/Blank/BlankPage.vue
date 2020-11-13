@@ -57,13 +57,32 @@ export default {
             window.router.push(`blank/${id}`);
         },
         async deletebyId(id) {
-            alert.confirm();
-            console.log(id);
+            const vm = this;
+            alert.confirm(function(response) {
+                if (response == "yes") {
+                    httpRequest({
+                        token: "kmzwa8a",
+                        method: "PersonDelete",
+                        Id: id,
+                    })
+                        .then(function() {
+                            vm.isLoading = true;
+                        })
+                        .then(function() {
+                            alert.success("data deleted");
+                        })
+                        .catch(function(err) {
+                            alert.error(err);
+                        })
+                        .finally(function() {
+                            vm.getData();
+                        });
+                }
+            });
         },
     },
     mounted: function() {
-        const vm = this;
-        vm.getData();
+        this.getData();
     },
 };
 </script>

@@ -1,4 +1,5 @@
 import toastr from "toastr";
+import $ from 'jquery';
 
 export default class AlertHelper {
     constructor() {
@@ -18,6 +19,7 @@ export default class AlertHelper {
             hideEasing: "linear",
             showMethod: "fadeIn",
             hideMethod: "fadeOut",
+            tapToDismiss: true
         }
     }
 
@@ -29,12 +31,27 @@ export default class AlertHelper {
         toastr["error"](message, "Error!");
     }
 
-    confirm() {
-        toastr.warning("<br /><button class='btn btn-primary' type='button' value='yes'>Yes</button><button class='btn btn-secondary' type='button'  value='no' >No</button>", 'Are you sure you want to delete this item?', {
+    confirm(onConfirm) {
+        toastr["info"](`
+            <br />
+            <div class='row'>
+                <div class='col-md-6'>
+                    <button class='btn btn-primary btn-block' value='yes'>Yes</button>
+                </div>
+                <div class='col-md-6'>
+                    <button class='btn btn-danger btn-block' value='no' >No</button>
+                </div>
+            </div>
+           `, 'Are you sure you want to delete this item?', {
             allowHtml: true,
-            onclick: function (toast) {
-                console.log(toast);
-            }
+            tapToDismiss: false,
+            onclick: function (event) {
+                onConfirm(event.target.value);
+                $('#toast-container').remove();
+            },
+            timeOut: 0,
+            onCloseClick: true,
+            preventDuplicates: true
 
         })
     }

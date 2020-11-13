@@ -1,6 +1,5 @@
 <template>
     <router-view />
-    <span class="myClass"></span>
 </template>
 
 <script>

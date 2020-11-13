@@ -27,14 +27,16 @@
                             <tr>
                                 <th class="text-center">#</th>
                                 <th>Name</th>
-                                <th>Age</th>
+                                <th>Date Of Birth</th>
                                 <th>Status</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                             <tr v-for="(value, index) in data" :key="index">
                                 <td class="p-0 text-center">{{ index + 1 }}</td>
                                 <td>{{ value.Name }}</td>
-                                <td>{{ value.Age }}</td>
+                                <td>
+                                    {{ formatDate(value.DateOfBirth) }}
+                                </td>
                                 <td>
                                     <div class="badge badge-success">
                                         online
@@ -83,6 +85,9 @@
 </template>
 
 <script>
+import UtilHelper from "../../helpers/UtilHelper";
+
+const util = new UtilHelper();
 export default {
     name: "ExampleTable",
     props: {
@@ -97,8 +102,11 @@ export default {
         },
     },
     methods: {
-        formAddData: () => {
+        formAddData() {
             window.router.push("/admin/blank/0");
+        },
+        formatDate(date) {
+            return util.epochToDate(date);
         },
     },
 };

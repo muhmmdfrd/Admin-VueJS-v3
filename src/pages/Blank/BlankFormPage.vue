@@ -36,12 +36,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Age</label>
+                            <label>Date Of Birth</label>
                             <input
-                                type="text"
+                                type="date"
                                 class="form-control"
                                 required
-                                v-model="age"
+                                v-model="dateOfBirth"
                                 tabindex="2"
                             />
                             <div class="invalid-feedback">
@@ -57,7 +57,7 @@
                     class="btn btn-info"
                     value="Submit"
                     tabindex="3"
-                    @click="submit()"
+                    @click.prevent="submit"
                 />
             </div>
         </form>
@@ -86,15 +86,17 @@ export default {
             const vm = this;
 
             if (
-                !helper.validateModel(vm.password) ||
-                !helper.validateModel(vm.user)
+                !helper.validateModel(vm.dateOfBirth) ||
+                !helper.validateModel(vm.name)
             ) {
                 alert.error("Please fill all form!");
             } else {
                 const data = {
-                    username: vm.user,
-                    password: vm.password,
+                    Name: vm.name,
+                    DateOfBirth: vm.dateOfBirth,
                     id: this.id,
+                    token: "kmzwa8awaa",
+                    method: this.id == 0 ? "PersonCreate" : "PersonUpdate",
                 };
 
                 this.id == "0" ? this.addData(data) : this.editData(data);
@@ -102,35 +104,33 @@ export default {
         },
         async editData(data) {
             const vm = this;
+            vm.isLoading = true;
 
-            helper
-                .updateData("users", data)
+            httpRequest(data)
                 .then(function() {
-                    vm.isLoading = true;
+                    alert.success("data updated");
                 })
                 .catch(function(err) {
                     alert.error(err);
                 })
                 .finally(function() {
-                    vm.isLoading = false;
-                    alert.success("Data Updated");
-                    window.router.push("/blank");
+                    vm.back();
                 });
         },
         async addData(data) {
             const vm = this;
-            helper
-                .addData("users", data)
+            vm.isLoading = true;
+
+            httpRequest(data)
                 .then(function() {
-                    vm.isLoading = true;
+                    alert.success("data created");
                 })
                 .catch(function(err) {
                     alert.error(err);
                 })
                 .finally(function() {
                     vm.isLoading = false;
-                    alert.success("Data Created");
-                    this.back();
+                    vm.back();
                 });
         },
     },
@@ -155,13 +155,18 @@ export default {
 
         if (vm.getParamsId() != "0") {
             vm.isLoading = true;
-            httpRequest({ method: "PersonGetAll", token: "kmzwaia" })
+
+            httpRequest({
+                method: "PersonGetById",
+                token: "kmzwaia",
+                Id: vm.id,
+            })
                 .then(function(response) {
                     const data = response.data.d;
                     if (data.Success) {
-                        const { Name, Age } = data.Values.shift();
+                        const { Name, DateOfBirth } = data.Values;
                         vm.name = Name;
-                        vm.age = Age;
+                        vm.dateOfBirth = helper.epochToSqlDate(DateOfBirth);
                     } else {
                         alert.error(data.Message);
                     }
