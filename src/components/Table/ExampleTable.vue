@@ -14,8 +14,11 @@
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Search by Task Name"
+                                    placeholder="Search by Name"
                                     id="customSearch"
+                                    v-model="keyword"
+                                    @change="search"
+                                    autocomplete="off"
                                 />
                             </div>
                         </form>
@@ -100,6 +103,9 @@ export default {
         detail: {
             type: Function,
         },
+        searchByKeyword: {
+            type: Function,
+        },
     },
     methods: {
         formAddData() {
@@ -107,6 +113,9 @@ export default {
         },
         formatDate(date) {
             return util.epochToDate(date);
+        },
+        search() {
+            this.searchByKeyword(this.keyword);
         },
     },
 };

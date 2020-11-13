@@ -19,13 +19,15 @@ export default class UtilHelper {
         return params.pop();
     }
 
+    epoch(data) {
+        return parseInt(data.replace(/[^0-9]/g, ""));
+    }
+
     epochToDate(date) {
-        let timestamp = parseInt(date.replace(/[^0-9]/g, ""));
-        return moment(timestamp).format("DD-MM-YYYY");
+        return moment(this.epoch(date)).format("DD-MM-YYYY");
     }
 
     epochToSqlDate(date) {
-        let timestamp = parseInt(date.replace(/[^0-9]/g, ""));
-        return moment(timestamp).format("YYYY-MM-DD");
+        return moment(this.epoch(date)).format("YYYY-MM-DD");
     }
 }

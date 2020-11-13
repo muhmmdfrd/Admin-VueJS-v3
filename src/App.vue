@@ -5,7 +5,6 @@
         <main-content>
             <router-view name="admin" />
         </main-content>
-        <footer-component />
     </main-wrapper>
 </template>
 
@@ -17,7 +16,6 @@ import MainContent from "./containers/MainContent.vue";
 // components
 import TopBar from "./components/Topbar/TopBar.vue";
 import SideBar from "./components/Sidebar/SideBar.vue";
-import FooterComponent from "./components/Footer/FooterComponent.vue";
 
 export default {
     name: "App",
@@ -26,7 +24,6 @@ export default {
         MainContent,
         TopBar,
         SideBar,
-        FooterComponent,
     },
 };
 </script>

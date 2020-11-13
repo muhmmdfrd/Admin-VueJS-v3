@@ -39,6 +39,7 @@
                             <label>Date Of Birth</label>
                             <input
                                 type="date"
+                                onkeydown="return false"
                                 class="form-control"
                                 required
                                 v-model="dateOfBirth"
@@ -84,7 +85,6 @@ export default {
         },
         submit() {
             const vm = this;
-
             if (
                 !helper.validateModel(vm.dateOfBirth) ||
                 !helper.validateModel(vm.name)

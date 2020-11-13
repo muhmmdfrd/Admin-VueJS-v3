@@ -15,10 +15,7 @@ import "bootstrap/dist/js/bootstrap.min.js"
 import "jquery.nicescroll"
 import "./assets/js/stisla"
 import "./assets/js/scripts"
-import lodash from "lodash";
 import "./assets/js/page/modules-datatables";
-
-window._ = lodash;
 
 // router
 import Router from './routes/Router';

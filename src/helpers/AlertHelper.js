@@ -51,7 +51,8 @@ export default class AlertHelper {
             },
             timeOut: 0,
             onCloseClick: true,
-            preventDuplicates: true
+            preventDuplicates: true,
+            positionClass: "toast-top-center"
 
         })
     }

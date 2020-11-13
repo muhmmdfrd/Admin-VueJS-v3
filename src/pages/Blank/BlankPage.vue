@@ -7,6 +7,7 @@
                 :data="data"
                 :detail="detail"
                 :deleteData="deletebyId"
+                :searchByKeyword="searchByKeyword"
             />
         </div>
     </div>
@@ -79,6 +80,23 @@ export default {
                         });
                 }
             });
+        },
+        async searchByKeyword(keyword) {
+            const vm = this;
+            const requestData = {
+                method: "PersonGetByKeyword",
+                token: "kmzwa8wa",
+                Keyword: keyword,
+            };
+
+            vm.isLoading = true;
+            httpRequest(requestData)
+                .then(function(response) {
+                    vm.data = response.data.d.Values;
+                })
+                .then(function() {
+                    vm.isLoading = false;
+                });
         },
     },
     mounted: function() {
