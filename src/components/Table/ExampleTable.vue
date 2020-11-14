@@ -4,7 +4,10 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <button class="btn btn-success" @click="formAddData()">
+                        <button
+                            class="btn btn-success"
+                            @click.prevent="formAddData()"
+                        >
                             Add
                         </button>
                     </h4>
@@ -17,7 +20,7 @@
                                     placeholder="Search by Name"
                                     id="customSearch"
                                     v-model="keyword"
-                                    @change="search"
+                                    @change.prevent="search"
                                     autocomplete="off"
                                 />
                             </div>

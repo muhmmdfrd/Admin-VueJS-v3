@@ -95,7 +95,7 @@ export default {
                     Name: vm.name,
                     DateOfBirth: vm.dateOfBirth,
                     id: this.id,
-                    token: "kmzwa8awaa",
+                    token: helper.getToken(),
                     method: this.id == 0 ? "PersonCreate" : "PersonUpdate",
                 };
 
@@ -158,7 +158,7 @@ export default {
 
             httpRequest({
                 method: "PersonGetById",
-                token: "kmzwaia",
+                token: helper.getToken(),
                 Id: vm.id,
             })
                 .then(function(response) {

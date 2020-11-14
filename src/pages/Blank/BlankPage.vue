@@ -19,8 +19,10 @@ import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import ExampleTable from "../../components/Table/ExampleTable.vue";
 import AlertHelper from "../../helpers/AlertHelper";
 import httpRequest from "../../services/IndexService";
+import UtilHelper from "../../helpers/UtilHelper";
 
 const alert = new AlertHelper();
+const helper = new UtilHelper();
 
 export default {
     name: "BlankPage",
@@ -36,7 +38,7 @@ export default {
         async getData() {
             const vm = this;
             const requestData = {
-                token: "kmzwa8awaa",
+                token: helper.getToken(),
                 method: "PersonGetAll",
             };
 
@@ -62,7 +64,7 @@ export default {
             alert.confirm(function(response) {
                 if (response == "yes") {
                     httpRequest({
-                        token: "kmzwa8a",
+                        token: helper.getToken(),
                         method: "PersonDelete",
                         Id: id,
                     })
@@ -85,7 +87,7 @@ export default {
             const vm = this;
             const requestData = {
                 method: "PersonGetByKeyword",
-                token: "kmzwa8wa",
+                token: helper.getToken(),
                 Keyword: keyword,
             };
 

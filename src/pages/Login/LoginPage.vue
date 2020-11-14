@@ -25,15 +25,14 @@
                             @submit.prevent="login()"
                         >
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">Username</label>
                                 <input
-                                    id="email"
-                                    type="email"
+                                    type="text"
                                     class="form-control"
                                     tabindex="1"
                                     required
                                     autofocus
-                                    autocomplete="false"
+                                    autocomplete="off"
                                     v-model="email"
                                 />
                                 <div class="invalid-feedback">
@@ -74,7 +73,13 @@
                                     class="btn btn-info btn-lg btn-block"
                                     tabindex="4"
                                 >
-                                    Login
+                                    <span
+                                        v-show="isLoading"
+                                        class="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <div v-show="!isLoading">Login</div>
                                 </button>
                             </div>
                         </form>
@@ -93,17 +98,47 @@
 
 <script>
 import AlertHelper from "../../helpers/AlertHelper";
+import httpRequest from "../../services/IndexService";
+import $ from "jquery";
 
 const alert = new AlertHelper();
 export default {
     name: "LoginPage",
+    data: function() {
+        return {
+            isLoading: false,
+        };
+    },
     methods: {
         login() {
-            if (this.email === "admin@demo" && this.password === "admin123") {
-                window.router.push("/admin/dashboard");
-            } else {
-                alert.error("Email or Password failed");
-            }
+            const vm = this;
+            const requestData = {
+                method: "Login",
+                token: "kmzwa8wawaa",
+                Username: this.email,
+                Password: this.password,
+            };
+            vm.isLoading = true;
+
+            $(".btn.btn-info.btn-lg.btn-block").prop("disabled", !vm.isLoading);
+
+            httpRequest(requestData)
+                .then(function(response) {
+                    const result = response.data.d;
+                    if (result.Success) {
+                        window.localStorage.setItem("_tin", result.Values);
+                        window.router.push("/admin/dashboard");
+                    } else {
+                        alert.error(result.Message);
+                    }
+                })
+                .catch(function(err) {
+                    alert.error(err);
+                })
+                .finally(function() {
+                    vm.isLoading = false;
+                    vm.password = "";
+                });
         },
     },
 };

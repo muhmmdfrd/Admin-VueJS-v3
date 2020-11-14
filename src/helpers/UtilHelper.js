@@ -19,6 +19,10 @@ export default class UtilHelper {
         return params.pop();
     }
 
+    getToken() {
+        return window.localStorage.getItem("_tin");
+    }
+
     epoch(data) {
         return parseInt(data.replace(/[^0-9]/g, ""));
     }
