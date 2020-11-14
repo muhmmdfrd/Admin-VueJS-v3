@@ -1,10 +1,14 @@
 import defer from "deferred";
 import axios from 'axios';
+import UtilHelper from "../helpers/UtilHelper";
 
 const baseurl = 'http://ws.first.local/MathService.asmx/Call';
 
 export default function httpRequest(data) {
     const deferred = new defer();
+
+    // get token and add exeption for login
+    data.token = data.method == "Login" ? "null" : new UtilHelper().getToken();
 
     axios({
         method: 'POST',

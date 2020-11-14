@@ -19,10 +19,8 @@ import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import ExampleTable from "../../components/Table/ExampleTable.vue";
 import AlertHelper from "../../helpers/AlertHelper";
 import httpRequest from "../../services/IndexService";
-import UtilHelper from "../../helpers/UtilHelper";
 
 const alert = new AlertHelper();
-const helper = new UtilHelper();
 
 export default {
     name: "BlankPage",
@@ -38,7 +36,6 @@ export default {
         async getData() {
             const vm = this;
             const requestData = {
-                token: helper.getToken(),
                 method: "PersonGetAll",
             };
 
@@ -61,13 +58,14 @@ export default {
         },
         async deletebyId(id) {
             const vm = this;
+            const requestData = {
+                method: "PersonDelete",
+                Id: id,
+            };
+
             alert.confirm(function(response) {
                 if (response == "yes") {
-                    httpRequest({
-                        token: helper.getToken(),
-                        method: "PersonDelete",
-                        Id: id,
-                    })
+                    httpRequest(requestData)
                         .then(function() {
                             vm.isLoading = true;
                         })
@@ -87,7 +85,6 @@ export default {
             const vm = this;
             const requestData = {
                 method: "PersonGetByKeyword",
-                token: helper.getToken(),
                 Keyword: keyword,
             };
 

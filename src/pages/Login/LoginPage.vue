@@ -114,7 +114,6 @@ export default {
             const vm = this;
             const requestData = {
                 method: "Login",
-                token: "kmzwa8wawaa",
                 Username: this.email,
                 Password: this.password,
             };
