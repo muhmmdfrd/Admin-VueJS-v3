@@ -209,7 +209,7 @@
                     </div></a
                 >
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-title">Logged in 5 min ago</div>
+                    <div class="dropdown-title">Administrator</div>
                     <a
                         href="features-profile.html"
                         class="dropdown-item has-icon"
@@ -229,7 +229,11 @@
                         <i class="fas fa-cog"></i> Settings
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item has-icon text-danger">
+                    <a
+                        href="javascript:"
+                        @click.prevent="logout()"
+                        class="dropdown-item has-icon text-danger"
+                    >
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 </div>
@@ -239,7 +243,15 @@
 </template>
 
 <script>
+import UtilHelper from "../../helpers/UtilHelper";
+
 export default {
     name: "TopBar",
+    methods: {
+        logout() {
+            new UtilHelper().removeToken();
+            window.router.push("/");
+        },
+    },
 };
 </script>

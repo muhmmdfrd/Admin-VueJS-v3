@@ -18,12 +18,13 @@
                 <!-- end of dashboard -->
 
                 <!-- layout -->
-                <title-menu-sidebar title="Starter" />
+                <title-menu-sidebar title="Manage" />
                 <menu-sidebar
                     path="/admin/blank"
                     icon="square"
                     menuName="Blank Page"
                 />
+                <menu-sidebar path="/admin/book" icon="book" menuName="Books" />
                 <dropdown-sidebar icon="columns" title="Layout">
                     <dropdown-menu
                         path="/layout/default"

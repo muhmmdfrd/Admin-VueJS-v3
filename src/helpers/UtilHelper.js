@@ -23,6 +23,10 @@ export default class UtilHelper {
         return window.localStorage.getItem("_tin");
     }
 
+    removeToken() {
+        window.localStorage.clear();
+    }
+
     epoch(data) {
         return parseInt(data.replace(/[^0-9]/g, ""));
     }

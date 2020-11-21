@@ -1,40 +1,56 @@
 <template>
     <loading-component v-show="isLoading" />
     <div v-show="!isLoading">
-        <title-header title="Blank Page" />
-        <example-table
+        <title-header title="Book" />
+        <book-table
             :data="data"
             :detail="detail"
-            :deleteData="deletebyId"
-            :searchByKeyword="searchByKeyword"
+            :deleteData="deleteData"
+            :next="next"
+            :prev="prev"
+            :current="current"
+            :size="size"
         />
     </div>
 </template>
 
 <script>
-import TitleHeader from "../../components/Title/TitleHeader.vue";
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
-import ExampleTable from "../../components/Table/ExampleTable.vue";
+import BookTable from "../../components/Table/BookTable";
+import TitleHeader from "../../components/Title/TitleHeader.vue";
 import AlertHelper from "../../helpers/AlertHelper";
 import httpRequest from "../../services/IndexService";
 
 const alert = new AlertHelper();
 
 export default {
-    name: "BlankPage",
-    components: {
-        TitleHeader,
-        LoadingComponent,
-        ExampleTable,
-    },
+    name: "BookPage",
+    components: { TitleHeader, LoadingComponent, BookTable },
     data: function() {
-        return { data: [], isLoading: true };
+        return {
+            isLoading: false,
+            data: [],
+            current: 1,
+            size: 0,
+        };
     },
     methods: {
-        async getData() {
+        detail(id) {
+            window.router.push(`book/${id}`);
+        },
+        next() {
+            this.getData(++this.current);
+        },
+        prev() {
+            this.getData(--this.current);
+        },
+        async getData(current) {
             const vm = this;
+            vm.isLoading = true;
+
             const requestData = {
-                method: "PersonGetAll",
+                method: "BookGetAll",
+                PageIndex: current,
             };
 
             httpRequest(requestData)
@@ -42,7 +58,8 @@ export default {
                     const data = response.data.d;
 
                     if (data.Success) {
-                        vm.data = data.Values;
+                        vm.data = data.Values.Data;
+                        vm.size = data.Values.RecordsTotal;
                     } else {
                         alert.error(data.Message);
                     }
@@ -54,20 +71,15 @@ export default {
                     vm.isLoading = false;
                 });
         },
-        detail(id) {
-            window.router.push(`blank/${id}`);
-        },
-        async deletebyId(id) {
+        async deleteData(id) {
             const vm = this;
             const requestData = {
-                method: "PersonDelete",
+                method: "BookDelete",
                 Id: id,
             };
-
             alert.confirm(function(response) {
                 if (response == "yes") {
                     vm.isLoading = true;
-
                     httpRequest(requestData)
                         .then(function() {
                             alert.success("data deleted");
@@ -76,33 +88,15 @@ export default {
                             alert.error(err);
                         })
                         .finally(function() {
-                            vm.getData();
+                            vm.isLoading = false;
                         });
                 }
             });
         },
-        async searchByKeyword(keyword) {
-            const vm = this;
-            const requestData = {
-                method: "PersonGetByKeyword",
-                Keyword: keyword,
-            };
-
-            vm.isLoading = true;
-            httpRequest(requestData)
-                .then(function(response) {
-                    vm.data = response.data.d.Values;
-                })
-                .catch(function(err) {
-                    alert.error(err);
-                })
-                .finally(function() {
-                    vm.isLoading = false;
-                });
-        },
     },
     mounted: function() {
-        this.getData();
+        this.getData(this.current);
     },
 };
+LoadingComponent;
 </script>

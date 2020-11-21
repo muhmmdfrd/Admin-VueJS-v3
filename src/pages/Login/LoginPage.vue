@@ -100,10 +100,20 @@
 import AlertHelper from "../../helpers/AlertHelper";
 import httpRequest from "../../services/IndexService";
 import $ from "jquery";
+import UtilHelper from "../../helpers/UtilHelper";
 
+const helper = new UtilHelper();
 const alert = new AlertHelper();
+
+const { validateModel, getToken } = helper;
+
 export default {
     name: "LoginPage",
+    mounted: function() {
+        if (validateModel(getToken())) {
+            window.router.push("/admin/dashboard");
+        }
+    },
     data: function() {
         return {
             isLoading: false,

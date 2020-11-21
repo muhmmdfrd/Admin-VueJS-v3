@@ -4,10 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>
-                        <button
-                            class="btn btn-success"
-                            @click.prevent="formAddData()"
-                        >
+                        <button class="btn btn-success" @click.prevent="add()">
                             Add
                         </button>
                     </h4>
@@ -17,15 +14,12 @@
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Search by Name"
+                                    placeholder="Search by Title or Author"
                                     id="customSearch"
                                     v-model="keyword"
                                     autocomplete="off"
                                 />
-                                <button
-                                    class="btn btn-info ml-2"
-                                    @click.prevent="search"
-                                >
+                                <button class="btn btn-info ml-2">
                                     Filter
                                 </button>
                             </div>
@@ -37,32 +31,36 @@
                         <table class="table table-striped">
                             <tr>
                                 <th class="text-center">#</th>
-                                <th>Name</th>
-                                <th>Date Of Birth</th>
-                                <th>Status</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Qty</th>
+                                <th>Photo</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                             <tr v-for="(value, index) in data" :key="index">
-                                <td class="p-0 text-center">{{ index + 1 }}</td>
-                                <td>{{ value.Name }}</td>
+                                <td class="p-0 text-center">
+                                    {{ (current - 1) * 5 + index + 1 }}
+                                </td>
+                                <td>{{ value.Title }}</td>
                                 <td>
-                                    {{ formatDate(value.DateOfBirth) }}
+                                    {{ value.Author }}
                                 </td>
                                 <td>
-                                    <div class="badge badge-success">
-                                        online
-                                    </div>
+                                    {{ value.Qty }}
+                                </td>
+                                <td>
+                                    {{ value.Path }}
                                 </td>
                                 <td class="text-center">
                                     <button
                                         class="btn btn-info mr-1"
-                                        @click="detail(value.Id)"
+                                        @click.prevent="detail(value.Id)"
                                     >
                                         Detail
                                     </button>
                                     <button
                                         class="btn btn-danger ml-1"
-                                        @click="deleteData(value.Id)"
+                                        @click.prevent="deleteData()"
                                     >
                                         Delete
                                     </button>
@@ -74,18 +72,26 @@
                 <div class="card-footer text-right">
                     <nav class="d-inline-block">
                         <ul class="pagination mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1"
-                                    ><i class="fas fa-chevron-left"></i
-                                ></a>
+                            <li :class="`page-item ${prevStatus}`">
+                                <button
+                                    class="page-link"
+                                    @click.prevent="prev()"
+                                >
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
                             </li>
                             <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
+                                <a class="page-link" href="javascript:">
+                                    {{ current }}
+                                </a>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#"
-                                    ><i class="fas fa-chevron-right"></i
-                                ></a>
+                            <li :class="`page-item ${nextStatus}`">
+                                <button
+                                    class="page-link"
+                                    @click.prevent="next()"
+                                >
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
                             </li>
                         </ul>
                     </nav>
@@ -96,41 +102,43 @@
 </template>
 
 <script>
-import UtilHelper from "../../helpers/UtilHelper";
-
-const util = new UtilHelper();
 export default {
-    name: "ExampleTable",
+    name: "BookTable",
+    methods: {
+        add() {
+            window.router.push("book/0");
+        },
+    },
+    computed: {
+        prevStatus() {
+            return this.current == 1 ? "disabled" : "";
+        },
+        nextStatus() {
+            return this.current == Math.ceil(this.size / 5) ? "disabled" : "";
+        },
+    },
     props: {
         data: {
             type: [],
         },
-        deleteData: {
-            type: Function,
-        },
         detail: {
             type: Function,
         },
-        searchByKeyword: {
+        deleteData: {
             type: Function,
         },
-    },
-    methods: {
-        formAddData() {
-            window.router.push("/admin/blank/0");
+        prev: {
+            type: Function,
         },
-        formatDate(date) {
-            return util.epochToDate(date);
+        next: {
+            type: Function,
         },
-        search() {
-            this.searchByKeyword(this.keyword);
+        current: {
+            type: Number,
+        },
+        size: {
+            type: Number,
         },
     },
 };
 </script>
-
-<style>
-#customSearch {
-    border-radius: 30px 30px 30px 30px !important;
-}
-</style>

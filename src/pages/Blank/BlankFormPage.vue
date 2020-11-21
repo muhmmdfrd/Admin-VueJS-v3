@@ -46,7 +46,7 @@
                                 tabindex="2"
                             />
                             <div class="invalid-feedback">
-                                What's your Password?
+                                your Date Of Birth, Please?
                             </div>
                         </div>
                     </div>
