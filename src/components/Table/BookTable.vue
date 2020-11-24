@@ -80,10 +80,17 @@
                                     <i class="fas fa-chevron-left"></i>
                                 </button>
                             </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="javascript:">
-                                    {{ current }}
-                                </a>
+                            <li
+                                :class="`page-item ${activePaging(i)}`"
+                                v-for="i in Math.ceil(size / 5)"
+                                :key="i"
+                            >
+                                <button
+                                    class="page-link"
+                                    @click.prevent="jump(i)"
+                                >
+                                    {{ i }}
+                                </button>
                             </li>
                             <li :class="`page-item ${nextStatus}`">
                                 <button
@@ -108,6 +115,14 @@ export default {
         add() {
             window.router.push("book/0");
         },
+        activePaging(currentPage) {
+            return this.current === currentPage ? "active" : "";
+        },
+        jump(currentPage) {
+            if (currentPage !== this.current) {
+                this.jumpToPage(currentPage);
+            }
+        },
     },
     computed: {
         prevStatus() {
@@ -131,6 +146,9 @@ export default {
             type: Function,
         },
         next: {
+            type: Function,
+        },
+        jumpToPage: {
             type: Function,
         },
         current: {

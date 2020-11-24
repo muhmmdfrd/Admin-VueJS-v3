@@ -8,6 +8,7 @@
             :deleteData="deleteData"
             :next="next"
             :prev="prev"
+            :jumpToPage="jumpToPage"
             :current="current"
             :size="size"
         />
@@ -43,6 +44,10 @@ export default {
         },
         prev() {
             this.getData(--this.current);
+        },
+        jumpToPage(numberPage) {
+            this.current = numberPage;
+            this.getData(numberPage);
         },
         async getData(current) {
             const vm = this;
