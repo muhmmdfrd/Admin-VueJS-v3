@@ -6,11 +6,9 @@
             :data="data"
             :detail="detail"
             :deleteData="deleteData"
-            :next="next"
-            :prev="prev"
-            :jumpToPage="jumpToPage"
             :current="current"
             :size="size"
+            @paging="onPaging"
         />
     </div>
 </template>
@@ -39,15 +37,9 @@ export default {
         detail(id) {
             window.router.push(`book/${id}`);
         },
-        next() {
-            this.getData(++this.current);
-        },
-        prev() {
-            this.getData(--this.current);
-        },
-        jumpToPage(numberPage) {
-            this.current = numberPage;
-            this.getData(numberPage);
+        onPaging(indexPage) {
+            this.current = indexPage;
+            this.getData(this.current);
         },
         async getData(current) {
             const vm = this;

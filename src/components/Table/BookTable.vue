@@ -71,36 +71,12 @@
                 </div>
                 <div class="card-footer text-right">
                     <nav class="d-inline-block">
-                        <ul class="pagination mb-0">
-                            <li :class="`page-item ${prevStatus}`">
-                                <button
-                                    class="page-link"
-                                    @click.prevent="prev()"
-                                >
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                            </li>
-                            <li
-                                :class="`page-item ${activePaging(i)}`"
-                                v-for="i in Math.ceil(size / 5)"
-                                :key="i"
-                            >
-                                <button
-                                    class="page-link"
-                                    @click.prevent="jump(i)"
-                                >
-                                    {{ i }}
-                                </button>
-                            </li>
-                            <li :class="`page-item ${nextStatus}`">
-                                <button
-                                    class="page-link"
-                                    @click.prevent="next()"
-                                >
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </li>
-                        </ul>
+                        <pagination-component
+                            @pagingdata="onPaging"
+                            :total="size"
+                            :currentPage="current"
+                            :totalPages="Math.ceil(size / 5)"
+                        />
                     </nav>
                 </div>
             </div>
@@ -109,27 +85,22 @@
 </template>
 
 <script>
+import PaginationComponent from "../Pagination/PaginationComponent.vue";
+
 export default {
     name: "BookTable",
+    components: {
+        PaginationComponent,
+    },
     methods: {
-        add() {
+        PaginationComponentadd() {
             window.router.push("book/0");
         },
         activePaging(currentPage) {
             return this.current === currentPage ? "active" : "";
         },
-        jump(currentPage) {
-            if (currentPage !== this.current) {
-                this.jumpToPage(currentPage);
-            }
-        },
-    },
-    computed: {
-        prevStatus() {
-            return this.current == 1 ? "disabled" : "";
-        },
-        nextStatus() {
-            return this.current == Math.ceil(this.size / 5) ? "disabled" : "";
+        onPaging(args) {
+            this.$emit("paging", args);
         },
     },
     props: {
@@ -140,15 +111,6 @@ export default {
             type: Function,
         },
         deleteData: {
-            type: Function,
-        },
-        prev: {
-            type: Function,
-        },
-        next: {
-            type: Function,
-        },
-        jumpToPage: {
             type: Function,
         },
         current: {

@@ -22,6 +22,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.24.0",
     "popper.js": "^1.14.7",
+    "toastr": "^2.1.4",
     "vue": "^3.0.0-0",
     "vue-loading-overlay": "^3.4.2",
     "vue-page-transition": "^0.2.2",
@@ -35,7 +36,8 @@
     "@vue/compiler-sfc": "^3.0.0-0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0-0"
+    "eslint-plugin-vue": "^7.0.0-0",
+    "vue-cli-plugin-vuetify": "~2.0.7"
   },
   "eslintConfig": {
     "root": true,
