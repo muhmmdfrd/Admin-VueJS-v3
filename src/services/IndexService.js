@@ -1,6 +1,8 @@
 import defer from "deferred";
 import axios from 'axios';
-import UtilHelper from "../helpers/UtilHelper";
+import {
+    getToken
+} from "../helpers/UtilHelper";
 
 const baseurl = 'http://ws.first.local/MathService.asmx/Call';
 
@@ -8,7 +10,7 @@ export default function httpRequest(data) {
     const deferred = new defer();
 
     // get token and add exeption for login
-    data.token = data.method == "Login" ? "null" : new UtilHelper().getToken();
+    data.token = data.method == "Login" ? "null" : getToken();
     data.PageSize = 5, // limit for pagination
 
         axios({

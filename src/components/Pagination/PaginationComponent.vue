@@ -63,6 +63,7 @@ export default {
     props: {
         maxVisibleButtons: {
             type: Number,
+            required: false,
             default: 2,
         },
         total: {
@@ -80,17 +81,15 @@ export default {
         },
         totalPages: {
             type: Number,
+            required: true,
         },
     },
     computed: {
         startPage() {
-            if (this.currentPage === 1) {
-                return 1;
-            }
+            if (this.currentPage === 1) return 1;
 
-            if (this.currentPage === this.totalPages) {
+            if (this.currentPage === this.totalPages)
                 return this.totalPages - this.maxVisibleButtons;
-            }
 
             return this.currentPage - 1;
         },

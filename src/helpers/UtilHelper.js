@@ -1,41 +1,24 @@
-import moment from "moment";
+const getToken = function () {
+    return window.localStorage.getItem("_tin");
+}
 
-export default class UtilHelper {
-    constructor() {
-        /* do nothing */
-    }
+const removeToken = function () {
+    window.localStorage.clear();
+}
 
-    dateNow() {
-        return moment();
-    }
+const validateModel = function (data) {
+    return data != null || data != undefined;
+}
 
-    validateModel(data) {
-        return data != null || data != undefined;
-    }
+const getParamsId = function () {
+    const href = window.location.hash;
+    const params = href.split('/');
+    return params.pop();
+}
 
-    getParamsId() {
-        const href = window.location.hash;
-        const params = href.split('/');
-        return params.pop();
-    }
-
-    getToken() {
-        return window.localStorage.getItem("_tin");
-    }
-
-    removeToken() {
-        window.localStorage.clear();
-    }
-
-    epoch(data) {
-        return parseInt(data.replace(/[^0-9]/g, ""));
-    }
-
-    epochToDate(date) {
-        return moment(this.epoch(date)).format("DD-MM-YYYY");
-    }
-
-    epochToSqlDate(date) {
-        return moment(this.epoch(date)).format("YYYY-MM-DD");
-    }
+export {
+    getToken,
+    removeToken,
+    getParamsId,
+    validateModel
 }

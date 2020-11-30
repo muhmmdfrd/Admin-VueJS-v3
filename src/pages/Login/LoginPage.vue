@@ -100,12 +100,9 @@
 import AlertHelper from "../../helpers/AlertHelper";
 import httpRequest from "../../services/IndexService";
 import $ from "jquery";
-import UtilHelper from "../../helpers/UtilHelper";
+import { validateModel, getToken } from "../../helpers/UtilHelper";
 
-const helper = new UtilHelper();
 const alert = new AlertHelper();
-
-const { validateModel, getToken } = helper;
 
 export default {
     name: "LoginPage",

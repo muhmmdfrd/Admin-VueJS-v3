@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import UtilHelper from "../../helpers/UtilHelper";
+import { now } from "../../helpers/DateHelper";
 
 const helper = new UtilHelper();
 
@@ -14,7 +14,7 @@ export default {
     name: "FooterComponent",
     data: function() {
         return {
-            year: helper.dateNow().year(),
+            year: now().year(),
         };
     },
 };

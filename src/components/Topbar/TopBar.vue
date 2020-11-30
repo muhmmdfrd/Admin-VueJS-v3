@@ -243,13 +243,13 @@
 </template>
 
 <script>
-import UtilHelper from "../../helpers/UtilHelper";
+import { removeToken } from "../../helpers/UtilHelper";
 
 export default {
     name: "TopBar",
     methods: {
         logout() {
-            new UtilHelper().removeToken();
+            removeToken();
             window.router.push("/");
         },
     },

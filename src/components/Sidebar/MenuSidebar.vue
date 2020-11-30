@@ -13,12 +13,15 @@ export default {
     props: {
         path: {
             type: String,
+            required: true,
         },
         icon: {
             type: String,
+            required: true,
         },
         menuName: {
             type: String,
+            required: true,
         },
     },
 };

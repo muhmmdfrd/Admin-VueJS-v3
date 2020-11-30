@@ -9,6 +9,7 @@
             :current="current"
             :size="size"
             @paging="onPaging"
+            @keyword="onSearch"
         />
     </div>
 </template>
@@ -41,22 +42,29 @@ export default {
             this.current = indexPage;
             this.getData(this.current);
         },
-        async getData(current) {
+        onSearch(keyword) {
+            this.current = 1;
+            this.getData(this.current, keyword);
+        },
+        async getData(current, keyword = "") {
             const vm = this;
             vm.isLoading = true;
 
             const requestData = {
                 method: "BookGetAll",
                 PageIndex: current,
+                Keyword: keyword,
             };
 
             httpRequest(requestData)
                 .then(function(response) {
                     const data = response.data.d;
+                    const { Data, RecordsFiltered, RecordsTotal } = data.Values;
 
                     if (data.Success) {
-                        vm.data = data.Values.Data;
-                        vm.size = data.Values.RecordsTotal;
+                        vm.data = Data;
+                        vm.size =
+                            keyword === "" ? RecordsTotal : RecordsFiltered;
                     } else {
                         alert.error(data.Message);
                     }
@@ -78,8 +86,13 @@ export default {
                 if (response == "yes") {
                     vm.isLoading = true;
                     httpRequest(requestData)
-                        .then(function() {
-                            alert.success("data deleted");
+                        .then(function(resp) {
+                            const result = resp.data.d;
+                            if (result.Success) {
+                                alert.success("data deleted");
+                            } else {
+                                alert.error(result.Message);
+                            }
                         })
                         .catch(function(err) {
                             alert.error(err);

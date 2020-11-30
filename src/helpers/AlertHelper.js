@@ -47,7 +47,7 @@ export default class AlertHelper {
             tapToDismiss: false,
             onclick: function (event) {
                 onConfirm(event.target.value);
-                $('#toast-container').remove();
+                $('#toast-container').remove().fadeOut();
             },
             timeOut: 0,
             onCloseClick: true,

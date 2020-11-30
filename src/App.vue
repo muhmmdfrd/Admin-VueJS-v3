@@ -17,9 +17,7 @@ import MainContent from "./containers/MainContent.vue";
 import TopBar from "./components/Topbar/TopBar.vue";
 import SideBar from "./components/Sidebar/SideBar.vue";
 
-import UtilHelper from "./helpers/UtilHelper";
-
-const helper = new UtilHelper();
+import { validateModel, getToken } from "./helpers/UtilHelper";
 
 export default {
     name: "App",
@@ -30,7 +28,7 @@ export default {
         SideBar,
     },
     mounted: function() {
-        if (!helper.validateModel(helper.getToken())) {
+        if (!validateModel(getToken())) {
             window.router.push({ name: "login" });
         }
     },

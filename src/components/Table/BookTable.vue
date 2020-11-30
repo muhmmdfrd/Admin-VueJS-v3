@@ -11,17 +11,9 @@
                     <div class="card-header-form">
                         <form>
                             <div class="input-group">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Search by Title or Author"
-                                    id="customSearch"
-                                    v-model="keyword"
-                                    autocomplete="off"
+                                <search-table-component
+                                    @searchkeyword="search"
                                 />
-                                <button class="btn btn-info ml-2">
-                                    Filter
-                                </button>
                             </div>
                         </form>
                     </div>
@@ -36,6 +28,15 @@
                                 <th>Qty</th>
                                 <th>Photo</th>
                                 <th colspan="2" class="text-center">Action</th>
+                            </tr>
+                            <tr>
+                                <td
+                                    colspan="6"
+                                    class="text-center"
+                                    v-if="data.length === 0"
+                                >
+                                    data not found
+                                </td>
                             </tr>
                             <tr v-for="(value, index) in data" :key="index">
                                 <td class="p-0 text-center">
@@ -60,7 +61,7 @@
                                     </button>
                                     <button
                                         class="btn btn-danger ml-1"
-                                        @click.prevent="deleteData()"
+                                        @click.prevent="deleteData(value.Id)"
                                     >
                                         Delete
                                     </button>
@@ -86,11 +87,13 @@
 
 <script>
 import PaginationComponent from "../Pagination/PaginationComponent.vue";
+import SearchTableComponent from "../Search/SearchTableComponent.vue";
 
 export default {
     name: "BookTable",
     components: {
         PaginationComponent,
+        SearchTableComponent,
     },
     methods: {
         PaginationComponentadd() {
@@ -101,6 +104,9 @@ export default {
         },
         onPaging(args) {
             this.$emit("paging", args);
+        },
+        search(data) {
+            this.$emit("keyword", data);
         },
     },
     props: {

@@ -3,8 +3,6 @@ import {
     createWebHashHistory
 } from "vue-router"
 
-import BlankPage from "../pages/Blank/BlankPage.vue";
-import BlankFormPage from "../pages/Blank/BlankFormPage.vue";
 import DashboardPage from "../pages/Dashboard/DashboardPage.vue";
 import NotFound from "../pages/External/404.vue";
 import LoginPage from "../pages/Login/LoginPage.vue";
@@ -23,34 +21,22 @@ const listRoutes = [{
         component: App,
         props: true,
         children: [{
-                path: "blank",
-                name: "blank",
-                components: {
-                    admin: BlankPage
-                },
-                props: true,
-            }, {
-                path: "blank/:id",
-                name: "form-blank",
-                components: {
-                    admin: BlankFormPage
-                },
-                props: true
-            }, {
                 path: "dashboard",
                 name: "dashboard",
                 components: {
                     admin: DashboardPage
                 },
                 props: true,
-            }, {
+            },
+            {
                 path: "book",
                 name: "book",
                 components: {
                     admin: BookPage
                 },
                 props: true
-            }, {
+            },
+            {
                 path: "book/:id",
                 name: "book-form",
                 components: {

@@ -20,15 +20,19 @@ export default {
     props: {
         title: {
             type: String,
+            required: true,
         },
         value: {
             type: Number,
+            required: true,
         },
         icon: {
             type: String,
+            required: true,
         },
         theme: {
             type: String,
+            required: true,
         },
     },
 };
