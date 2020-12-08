@@ -19,7 +19,7 @@ import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import BookTable from "../../components/Table/BookTable";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import AlertHelper from "../../helpers/AlertHelper";
-import httpRequest from "../../services/IndexService";
+import AjaxService from "../../services/AjaxService";
 
 const alert = new AlertHelper();
 
@@ -48,58 +48,52 @@ export default {
         },
         async getData(current, keyword = "") {
             const vm = this;
-            vm.isLoading = true;
-
             const requestData = {
                 method: "BookGetAll",
                 PageIndex: current,
                 Keyword: keyword,
             };
 
-            httpRequest(requestData)
-                .then(function(response) {
-                    const data = response.data.d;
-                    const { Data, RecordsFiltered, RecordsTotal } = data.Values;
+            vm.isLoading = true;
 
-                    if (data.Success) {
-                        vm.data = Data;
-                        vm.size =
-                            keyword === "" ? RecordsTotal : RecordsFiltered;
-                    } else {
-                        alert.error(data.Message);
-                    }
-                })
-                .catch(function(err) {
+            AjaxService(
+                requestData,
+                function({ Values }) {
+                    const { Data, RecordsTotal, RecordsFiltered } = Values;
+                    vm.data = Data;
+                    vm.size = keyword === "" ? RecordsTotal : RecordsFiltered;
+                },
+                function(err) {
                     alert.error(err);
-                })
-                .finally(function() {
+                },
+                function() {
                     vm.isLoading = false;
-                });
+                },
+            );
         },
         async deleteData(id) {
             const vm = this;
-            const requestData = {
-                method: "BookDelete",
-                Id: id,
-            };
             alert.confirm(function(response) {
                 if (response == "yes") {
                     vm.isLoading = true;
-                    httpRequest(requestData)
-                        .then(function(resp) {
-                            const result = resp.data.d;
-                            if (result.Success) {
-                                alert.success("data deleted");
-                            } else {
-                                alert.error(result.Message);
-                            }
-                        })
-                        .catch(function(err) {
+
+                    const requestData = {
+                        method: "BookDelete",
+                        Id: id,
+                    };
+
+                    AjaxService(
+                        requestData,
+                        function() {
+                            alert.success("data deleted");
+                        },
+                        function(err) {
                             alert.error(err);
-                        })
-                        .finally(function() {
-                            vm.isLoading = false;
-                        });
+                        },
+                        function() {
+                            vm.getData(vm.current);
+                        },
+                    );
                 }
             });
         },

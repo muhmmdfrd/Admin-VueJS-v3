@@ -20,6 +20,7 @@
                 <!-- layout -->
                 <title-menu-sidebar title="Manage" />
                 <menu-sidebar path="/admin/book" icon="book" menuName="Books" />
+                <menu-sidebar path="/admin/user" icon="user" menuName="Users" />
                 <dropdown-sidebar icon="columns" title="Layout">
                     <dropdown-menu
                         path="/layout/default"

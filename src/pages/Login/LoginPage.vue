@@ -6,7 +6,7 @@
             >
                 <div class="login-brand">
                     <img
-                        src="../../assets/img/stisla-fill.svg"
+                        :src="loginBrand"
                         alt="logo"
                         width="100"
                         class="shadow-light rounded-circle"
@@ -98,8 +98,9 @@
 
 <script>
 import AlertHelper from "../../helpers/AlertHelper";
-import httpRequest from "../../services/IndexService";
+import logo from "../../assets/img/stisla-fill.svg";
 import $ from "jquery";
+import AjaxService from "../../services/AjaxService";
 import { validateModel, getToken } from "../../helpers/UtilHelper";
 
 const alert = new AlertHelper();
@@ -114,6 +115,7 @@ export default {
     data: function() {
         return {
             isLoading: false,
+            loginBrand: logo,
         };
     },
     methods: {
@@ -128,23 +130,20 @@ export default {
 
             $(".btn.btn-info.btn-lg.btn-block").prop("disabled", !vm.isLoading);
 
-            httpRequest(requestData)
-                .then(function(response) {
-                    const result = response.data.d;
-                    if (result.Success) {
-                        window.localStorage.setItem("_tin", result.Values);
-                        window.router.push("/admin/dashboard");
-                    } else {
-                        alert.error(result.Message);
-                    }
-                })
-                .catch(function(err) {
+            AjaxService(
+                requestData,
+                function({ Values }) {
+                    window.localStorage.setItem("_tin", Values);
+                    window.router.push("/admin/dashboard");
+                },
+                function(err) {
                     alert.error(err);
-                })
-                .finally(function() {
+                },
+                function() {
                     vm.isLoading = false;
                     vm.password = "";
-                });
+                },
+            );
         },
     },
 };

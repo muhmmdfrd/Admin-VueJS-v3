@@ -100,6 +100,8 @@ export default {
                 limit = Math.min(all, minimum);
 
             for (let i = this.startPage; i <= limit; i++) {
+                if (i === 0) continue;
+
                 range.push({
                     name: i,
                     isDisabled: i === this.currentPage,
@@ -115,10 +117,10 @@ export default {
             return this.currentPage === this.totalPages;
         },
         prevStatus() {
-            return this.currentPage == 1 ? "disabled" : "";
+            return this.currentPage === 1 ? "disabled" : "";
         },
         nextStatus() {
-            return this.currentPage == this.totalPages ? "disabled" : "";
+            return this.currentPage === this.totalPages ? "disabled" : "";
         },
     },
     methods: {

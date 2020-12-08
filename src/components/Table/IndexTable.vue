@@ -15,50 +15,45 @@
                         <table class="table table-striped">
                             <tr>
                                 <th class="text-center">#</th>
-                                <th>Title</th>
-                                <th>Author</th>
-                                <th>Qty</th>
-                                <th>Photo</th>
+                                <th
+                                    v-for="(value, index) in titleHeader"
+                                    :key="index"
+                                >
+                                    {{ value }}
+                                </th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                             <tr>
                                 <td
                                     colspan="6"
                                     class="text-center"
-                                    v-if="data.length === 0"
+                                    v-if="dataBody.length === 0"
                                 >
                                     data not found
                                 </td>
                             </tr>
-                            <tr v-for="(value, index) in data" :key="index">
+                            <!-- slot -->
+                            <tr v-for="(data, index) in dataBody" :key="index">
                                 <td class="p-0 text-center">
                                     {{ (current - 1) * 5 + index + 1 }}
                                 </td>
-                                <td>{{ value.Title }}</td>
-                                <td>
-                                    {{ value.Author }}
-                                </td>
-                                <td>
-                                    {{ value.Qty }}
-                                </td>
-                                <td>
-                                    {{ value.Path }}
-                                </td>
+                                <td>{{ data.Username }}</td>
                                 <td class="text-center">
                                     <button
                                         class="btn btn-info mr-1"
-                                        @click.prevent="detail(value.Id)"
+                                        @click.prevent="detail(data.Id)"
                                     >
                                         Detail
                                     </button>
                                     <button
                                         class="btn btn-danger ml-1"
-                                        @click.prevent="deleteData(value.Id)"
+                                        @click.prevent="deleteData(data.Id)"
                                     >
                                         Delete
                                     </button>
                                 </td>
                             </tr>
+                            <!-- end slot -->
                         </table>
                     </div>
                 </div>
@@ -78,44 +73,41 @@
 </template>
 
 <script>
-import PaginationComponent from "../Pagination/PaginationComponent.vue";
-import SearchTableComponent from "../Search/SearchTableComponent.vue";
+import SearchTableComponent from "../Search/SearchTableComponent";
+import PaginationComponent from "../Pagination/PaginationComponent";
 
 export default {
-    name: "BookTable",
+    name: "IndexTable",
     components: {
-        PaginationComponent,
         SearchTableComponent,
+        PaginationComponent,
     },
     methods: {
-        add() {
-            window.router.push("book/0");
-        },
-        activePaging(currentPage) {
-            return this.current === currentPage ? "active" : "";
-        },
         onPaging(args) {
             this.$emit("paging", args);
         },
-        search(data) {
-            this.$emit("keyword", data);
+        search(args) {
+            this.$emit("keyword", args);
         },
     },
     props: {
-        data: {
+        titleHeader: {
             type: [],
+            required: true,
         },
-        detail: {
-            type: Function,
-        },
-        deleteData: {
-            type: Function,
+        dataBody: {
+            type: [],
+            required: true,
         },
         current: {
             type: Number,
         },
         size: {
             type: Number,
+            required: true,
+        },
+        add: {
+            type: Function,
         },
     },
 };

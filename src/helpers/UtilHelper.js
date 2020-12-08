@@ -13,12 +13,17 @@ const validateModel = function (data) {
 const getParamsId = function () {
     const href = window.location.hash;
     const params = href.split('/');
-    return params.pop();
+    return Number(params.pop());
+}
+
+const removeArrOfObj = function (array, property) {
+    array.map((value) => delete value[property]);
 }
 
 export {
     getToken,
     removeToken,
     getParamsId,
-    validateModel
+    validateModel,
+    removeArrOfObj
 }
