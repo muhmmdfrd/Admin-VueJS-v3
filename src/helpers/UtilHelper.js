@@ -1,5 +1,13 @@
+function getDataLogin() {
+    return JSON.parse(window.localStorage.getItem("_tin"));
+}
+
 const getToken = function () {
-    return window.localStorage.getItem("_tin");
+    return getDataLogin().Token;
+}
+
+const getUname = function () {
+    return getDataLogin().Username;
 }
 
 const removeToken = function () {
@@ -22,6 +30,7 @@ const removeArrOfObj = function (array, property) {
 
 export {
     getToken,
+    getUname,
     removeToken,
     getParamsId,
     validateModel,

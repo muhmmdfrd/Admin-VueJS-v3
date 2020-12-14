@@ -5,11 +5,14 @@
         <index-table
             :titleHeader="title"
             :dataBody="value"
+            :configs="configs"
             :current="current"
             :size="size"
             :add="add"
             @paging="paging"
             @keyword="keyword"
+            @detail="detail"
+            @delete-data="deleteData"
         />
     </div>
 </template>
@@ -17,10 +20,10 @@
 <script>
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
-import AjaxRequest from "../../services/AjaxService";
 import IndexTable from "../../components/Table/IndexTable";
 import AlertHelper from "../../helpers/AlertHelper";
 import AjaxService from "../../services/AjaxService";
+import { epochToDate } from "../../helpers/DateHelper";
 
 const alert = new AlertHelper();
 
@@ -33,6 +36,7 @@ export default {
             title: [],
             value: [],
             current: 1,
+            configs: [],
         };
     },
     methods: {
@@ -47,14 +51,34 @@ export default {
             };
 
             vm.isLoading = true;
-            AjaxRequest(
+            AjaxService(
                 requestData,
                 function({ Values }) {
                     const { Data, RecordsTotal, RecordsFiltered } = Values;
 
                     vm.value = Data;
-                    vm.title = ["Username"];
+                    vm.title = ["Username", "Name", "Date Of Birth"];
                     vm.size = keyword === "" ? RecordsTotal : RecordsFiltered;
+                    vm.configs = [
+                        {
+                            field: "Username",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "Name",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "DateOfBirth",
+                            render: function(data) {
+                                return epochToDate(data);
+                            },
+                        },
+                    ];
                 },
                 function(err) {
                     alert.error(err);

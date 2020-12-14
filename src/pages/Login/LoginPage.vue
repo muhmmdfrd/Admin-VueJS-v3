@@ -133,7 +133,8 @@ export default {
             AjaxService(
                 requestData,
                 function({ Values }) {
-                    window.localStorage.setItem("_tin", Values);
+                    const info = JSON.stringify(Values);
+                    window.localStorage.setItem("_tin", info);
                     window.router.push("/admin/dashboard");
                 },
                 function(err) {

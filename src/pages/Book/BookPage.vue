@@ -2,39 +2,47 @@
     <loading-component v-show="isLoading" />
     <div v-show="!isLoading">
         <title-header title="Book" />
-        <book-table
-            :data="data"
-            :detail="detail"
-            :deleteData="deleteData"
+        <index-table
+            :titleHeader="titles"
+            :dataBody="data"
             :current="current"
+            :configs="configs"
             :size="size"
+            :add="add"
             @paging="onPaging"
             @keyword="onSearch"
+            @detail="detail"
+            @delete-data="deleteData"
         />
     </div>
 </template>
 
 <script>
 import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
-import BookTable from "../../components/Table/BookTable";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import AlertHelper from "../../helpers/AlertHelper";
 import AjaxService from "../../services/AjaxService";
+import IndexTable from "../../components/Table/IndexTable";
 
 const alert = new AlertHelper();
 
 export default {
     name: "BookPage",
-    components: { TitleHeader, LoadingComponent, BookTable },
+    components: { TitleHeader, LoadingComponent, IndexTable },
     data: function() {
         return {
             isLoading: false,
             data: [],
+            titles: [],
             current: 1,
             size: 0,
+            configs: [],
         };
     },
     methods: {
+        add() {
+            window.router.push("book/0");
+        },
         detail(id) {
             window.router.push(`book/${id}`);
         },
@@ -60,8 +68,36 @@ export default {
                 requestData,
                 function({ Values }) {
                     const { Data, RecordsTotal, RecordsFiltered } = Values;
+
+                    vm.titles = ["Title", "Author", "Qty", "Photo"];
                     vm.data = Data;
                     vm.size = keyword === "" ? RecordsTotal : RecordsFiltered;
+                    vm.configs = [
+                        {
+                            field: "Title",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "Author",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "Qty",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "Path",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                    ];
                 },
                 function(err) {
                     alert.error(err);

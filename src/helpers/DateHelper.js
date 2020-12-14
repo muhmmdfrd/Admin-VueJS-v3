@@ -12,7 +12,7 @@ const epochToDate = function (date) {
     return moment(epoch(date)).format("DD-MM-YYYY");
 }
 
-epochToSqlDate = function (date) {
+const epochToSqlDate = function (date) {
     return moment(epoch(date)).format("YYYY-MM-DD");
 }
 

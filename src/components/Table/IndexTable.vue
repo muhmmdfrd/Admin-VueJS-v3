@@ -15,11 +15,8 @@
                         <table class="table table-striped">
                             <tr>
                                 <th class="text-center">#</th>
-                                <th
-                                    v-for="(value, index) in titleHeader"
-                                    :key="index"
-                                >
-                                    {{ value }}
+                                <th v-for="title in titleHeader" :key="title">
+                                    {{ title }}
                                 </th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
@@ -37,7 +34,9 @@
                                 <td class="p-0 text-center">
                                     {{ (current - 1) * 5 + index + 1 }}
                                 </td>
-                                <td>{{ data.Username }}</td>
+                                <td v-for="config in configs" :key="config">
+                                    {{ config.render(data[config.field]) }}
+                                </td>
                                 <td class="text-center">
                                     <button
                                         class="btn btn-info mr-1"
@@ -89,6 +88,12 @@ export default {
         search(args) {
             this.$emit("keyword", args);
         },
+        detail(id) {
+            this.$emit("detail", id);
+        },
+        deleteData(id) {
+            this.$emit("delete-data", id);
+        },
     },
     props: {
         titleHeader: {
@@ -96,6 +101,10 @@ export default {
             required: true,
         },
         dataBody: {
+            type: [],
+            required: true,
+        },
+        configs: {
             type: [],
             required: true,
         },
