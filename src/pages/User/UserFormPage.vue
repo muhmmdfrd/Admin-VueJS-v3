@@ -1,5 +1,5 @@
 <template>
-    <title-header title="Book Form" />
+    <title-header title="User Form" />
     <loading-component v-show="isLoading" />
     <form-wrapper>
         <form-header>
@@ -9,31 +9,31 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Title</label>
+                        <label>Username</label>
                         <input
                             type="text"
                             class="form-control"
                             required
-                            v-model="model.Title"
+                            v-model="model.Username"
                             tabindex="1"
                         />
                         <div class="invalid-feedback">
-                            Oh no! Title is invalid.
+                            Oh no! Username is invalid.
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Author</label>
+                        <label>Name</label>
                         <input
                             type="text"
                             class="form-control"
                             required
-                            v-model="model.Author"
+                            v-model="model.Name"
                             tabindex="2"
                         />
                         <div class="invalid-feedback">
-                            Oh no! Author is invalid.
+                            Oh no! Name is invalid.
                         </div>
                     </div>
                 </div>
@@ -41,31 +41,16 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Qty</label>
+                        <label>Date Of Birth</label>
                         <input
-                            type="number"
+                            type="date"
                             class="form-control"
                             required
-                            v-model="model.Qty"
+                            v-model="model.DateOfBirth"
                             tabindex="3"
                         />
                         <div class="invalid-feedback">
-                            Oh no! Qty is invalid.
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Photo</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            required
-                            v-model="model.Path"
-                            tabindex="4"
-                        />
-                        <div class="invalid-feedback">
-                            Oh no! Photo is invalid.
+                            Oh no! Data Of Birth is invalid.
                         </div>
                     </div>
                 </div>
@@ -76,44 +61,67 @@
 </template>
 
 <script>
-import BackButton from "../../components/FormPage/BackButton.vue";
-import FormBody from "../../components/FormPage/FormBody.vue";
-import FormHeader from "../../components/FormPage/FormHeader.vue";
-import FormWrapper from "../../components/FormPage/FormWrapper.vue";
-import SubmitButton from "../../components/FormPage/SubmitButton.vue";
-import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
-import AlertHelper from "../../helpers/AlertHelper";
-import { getParamsId } from "../../helpers/UtilHelper";
+import LoadingComponent from "../../components/Loading/LoadingComponent.vue";
 import AjaxService from "../../services/AjaxService";
+import AlertHelper from "../../helpers/AlertHelper";
+import FormWrapper from "../../components/FormPage/FormWrapper.vue";
+import FormHeader from "../../components/FormPage/FormHeader.vue";
+import FormBody from "../../components/FormPage/FormBody.vue";
+import SubmitButton from "../../components/FormPage/SubmitButton.vue";
+import BackButton from "../../components/FormPage/BackButton.vue";
+import { epochToSqlDate } from "../../helpers/DateHelper";
+import { getParamsId } from "../../helpers/UtilHelper";
 
 const alert = new AlertHelper();
 
 export default {
-    name: "BookFormPage",
+    name: "UserFormPage",
     components: {
         TitleHeader,
         LoadingComponent,
         FormWrapper,
-        FormHeader,
+        SubmitButton,
         BackButton,
         FormBody,
-        SubmitButton,
+        FormHeader,
     },
     data: function() {
         return {
-            isLoading: true,
+            isLoading: false,
             model: {},
         };
     },
     methods: {
+        async getDataById() {
+            const vm = this;
+            const requestData = {
+                method: "UserGetAll",
+                Id: getParamsId(),
+            };
+
+            vm.isLoading = true;
+            AjaxService(
+                requestData,
+                function({ Values }) {
+                    vm.model = Values.Data.shift();
+                    vm.model.DateOfBirth = epochToSqlDate(vm.model.DateOfBirth);
+                },
+                function(err) {
+                    alert.error(err);
+                },
+                function() {
+                    vm.isLoading = false;
+                },
+            );
+        },
         back() {
-            window.router.push({ name: "book" });
+            window.router.push("/admin/user");
         },
         submit() {
             const vm = this;
 
-            vm.model.method = getParamsId() === 0 ? "BookCreate" : "BookUpdate";
+            vm.model.method = getParamsId() === 0 ? "UserCreate" : "UserUpdate";
             vm.model.Id = getParamsId();
             vm.isLoading = true;
             vm.save(vm.model);
@@ -132,28 +140,6 @@ export default {
                 function() {
                     vm.isLoading = false;
                     vm.back();
-                },
-            );
-        },
-        async getDataById() {
-            const vm = this;
-            const requestData = {
-                method: "BookGetAll",
-                Id: getParamsId(),
-            };
-
-            vm.isLoading = true;
-
-            AjaxService(
-                requestData,
-                function({ Values }) {
-                    vm.model = Values.Data.shift();
-                },
-                function(err) {
-                    alert.error(err);
-                },
-                function() {
-                    vm.isLoading = false;
                 },
             );
         },

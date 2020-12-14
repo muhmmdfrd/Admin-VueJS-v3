@@ -3,7 +3,8 @@ function getDataLogin() {
 }
 
 const getToken = function () {
-    return getDataLogin().Token;
+    const isValid = validateModel(getDataLogin());
+    return isValid ? getDataLogin().Token : null;
 }
 
 const getUname = function () {

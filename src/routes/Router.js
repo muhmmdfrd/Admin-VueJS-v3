@@ -9,6 +9,7 @@ import LoginPage from "../pages/Login/LoginPage.vue";
 import BookPage from "../pages/Book/BookPage.vue";
 import BookFormPage from "../pages/Book/BookFormPage.vue";
 import UserPage from '../pages/User/UserPage.vue';
+import UserFormPage from "../pages/User/UserFormPage.vue";
 import App from "../App.vue";
 
 const listRoutes = [{
@@ -51,6 +52,14 @@ const listRoutes = [{
                 components: {
                     admin: UserPage
                 }
+            },
+            {
+                path: "user/:id",
+                name: "user-form",
+                components: {
+                    admin: UserFormPage
+                },
+                props: true
             },
             {
                 path: ":catchAll(.*)",
