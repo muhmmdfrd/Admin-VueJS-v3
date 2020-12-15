@@ -22,7 +22,7 @@
                             </tr>
                             <tr>
                                 <td
-                                    colspan="6"
+                                    :colspan="titleHeader.length + 2"
                                     class="text-center"
                                     v-if="dataBody.length === 0"
                                 >

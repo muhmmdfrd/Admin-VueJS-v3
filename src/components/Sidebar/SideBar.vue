@@ -21,10 +21,10 @@
                 <title-menu-sidebar title="Manage" />
                 <menu-sidebar path="/admin/book" icon="book" menuName="Books" />
                 <menu-sidebar path="/admin/user" icon="user" menuName="Users" />
-                <dropdown-sidebar icon="columns" title="Layout">
+                <dropdown-sidebar icon="archive" title="Transaction">
                     <dropdown-menu
-                        path="/layout/default"
-                        title="Default Layout"
+                        path="/admin/transaction/borrowing"
+                        title="Borrowing"
                     />
                 </dropdown-sidebar>
                 <!-- end of layout -->
