@@ -19,7 +19,8 @@ import IndexTable from "../../components/Table/IndexTable.vue";
 import TitleHeader from "../../components/Title/TitleHeader.vue";
 import AlertHelper from "../../helpers/AlertHelper";
 import AjaxService from "../../services/AjaxService";
-import { epochToDate } from "../../helpers/DateHelper";
+import { dateDiff, epochCompare, epochToDate } from "../../helpers/DateHelper";
+import { currency } from "../../helpers/UtilHelper";
 
 const alert = new AlertHelper();
 
@@ -99,14 +100,22 @@ export default {
                         },
                         {
                             field: "IsPenalty",
-                            render: function(data) {
-                                return data ? "Active" : "Expired";
+                            render: function(data, row) {
+                                return !data && epochCompare(row.Deadline)
+                                    ? "Active"
+                                    : "Expired";
                             },
                         },
                         {
                             field: "TotalPenalty",
-                            render: function(data) {
-                                return data == 0 ? "-" : data;
+                            render: function(data, row) {
+                                return data == 0 && epochCompare(row.Deadline)
+                                    ? "-"
+                                    : currency(
+                                          (data + 1) *
+                                              dateDiff(row.Deadline) *
+                                              1000,
+                                      );
                             },
                         },
                     ];

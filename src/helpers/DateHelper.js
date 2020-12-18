@@ -16,9 +16,22 @@ const epochToSqlDate = function (date) {
     return moment(epoch(date)).format("YYYY-MM-DD");
 }
 
+const epochCompare = function (date) {
+    const dateParams = epoch(date);
+    const dateNow = now();
+
+    return moment(dateParams).isSame(dateNow) || moment(dateParams).isAfter(dateNow);
+}
+
+const dateDiff = function (date) {
+    return moment(now()).diff(epoch(date), 'days');
+}
+
 export {
     now,
+    dateDiff,
     epoch,
     epochToDate,
     epochToSqlDate,
+    epochCompare
 };

@@ -35,7 +35,9 @@
                                     {{ (current - 1) * 5 + index + 1 }}
                                 </td>
                                 <td v-for="config in configs" :key="config">
-                                    {{ config.render(data[config.field]) }}
+                                    {{
+                                        config.render(data[config.field], data)
+                                    }}
                                 </td>
                                 <td class="text-center">
                                     <button

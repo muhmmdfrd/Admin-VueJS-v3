@@ -29,7 +29,17 @@ const removeArrOfObj = function (array, property) {
     array.map((value) => delete value[property]);
 }
 
+const currency = function (data) {
+    const result = new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'IDR'
+    }).format(data);
+
+    return result.replace("IDR", "Rp");
+}
+
 export {
+    currency,
     getToken,
     getUname,
     removeToken,
