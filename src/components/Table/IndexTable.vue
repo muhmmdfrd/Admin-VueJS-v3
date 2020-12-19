@@ -35,9 +35,23 @@
                                     {{ (current - 1) * 5 + index + 1 }}
                                 </td>
                                 <td v-for="config in configs" :key="config">
-                                    {{
-                                        config.render(data[config.field], data)
-                                    }}
+                                    <div v-if="!config.html">
+                                        {{
+                                            config.render(
+                                                data[config.field],
+                                                data,
+                                            )
+                                        }}
+                                    </div>
+                                    <div
+                                        v-if="config.html"
+                                        v-html="
+                                            config.render(
+                                                data[config.field],
+                                                data,
+                                            )
+                                        "
+                                    ></div>
                                 </td>
                                 <td class="text-center">
                                     <button

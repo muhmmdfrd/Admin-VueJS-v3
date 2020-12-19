@@ -101,10 +101,19 @@ export default {
                         {
                             field: "IsPenalty",
                             render: function(data, row) {
-                                return !data && epochCompare(row.Deadline)
-                                    ? "Active"
-                                    : "Expired";
+                                const result =
+                                    !data && epochCompare(row.Deadline)
+                                        ? "Active"
+                                        : "Expired";
+
+                                const label =
+                                    !data && epochCompare(row.Deadline)
+                                        ? "primary"
+                                        : "danger";
+
+                                return `<span class='badge badge-pill badge-${label}'>${result}</span>`;
                             },
+                            html: true,
                         },
                         {
                             field: "TotalPenalty",
