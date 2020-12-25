@@ -139,14 +139,31 @@
 </template>
 
 <script>
+import AlertHelper from "../../helpers/AlertHelper";
 import { removeToken, getUname } from "../../helpers/UtilHelper";
+import AjaxService from "../../services/AjaxService";
+
+const alert = new AlertHelper();
 
 export default {
     name: "TopBar",
     methods: {
         logout() {
-            removeToken();
-            window.router.push("/");
+            var requestData = {
+                method: "Logout",
+            };
+
+            AjaxService(
+                requestData,
+                function() {},
+                function(err) {
+                    alert.error(err);
+                },
+                function() {
+                    removeToken();
+                    window.router.push("/");
+                },
+            );
         },
     },
     data: function() {
