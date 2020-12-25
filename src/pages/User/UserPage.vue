@@ -57,7 +57,7 @@ export default {
                     const { Data, RecordsTotal, RecordsFiltered } = Values;
 
                     vm.value = Data;
-                    vm.title = ["Username", "Name", "Date Of Birth"];
+                    vm.title = ["Username", "Name", "Role", "Date Of Birth"];
                     vm.size = keyword === "" ? RecordsTotal : RecordsFiltered;
                     vm.configs = [
                         {
@@ -68,6 +68,12 @@ export default {
                         },
                         {
                             field: "Name",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "RoleName",
                             render: function(data) {
                                 return data;
                             },

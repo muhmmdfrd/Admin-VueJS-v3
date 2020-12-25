@@ -44,7 +44,7 @@
                         <label>Date Of Birth</label>
                         <input
                             type="date"
-                            class="form-control"
+                            class="form-control datepicker"
                             required
                             v-model="model.DateOfBirth"
                             tabindex="3"
@@ -52,6 +52,19 @@
                         <div class="invalid-feedback">
                             Oh no! Data Of Birth is invalid.
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        required
+                        v-model="model.Password"
+                        tabindex="4"
+                    />
+                    <div class="invalid-feedback">
+                        Oh no! Password is invalid.
                     </div>
                 </div>
             </div>
