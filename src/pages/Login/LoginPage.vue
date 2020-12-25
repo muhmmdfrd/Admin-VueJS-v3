@@ -101,7 +101,7 @@ import AlertHelper from "../../helpers/AlertHelper";
 import logo from "../../assets/img/stisla-fill.svg";
 import $ from "jquery";
 import AjaxService from "../../services/AjaxService";
-import { validateModel, getToken } from "../../helpers/UtilHelper";
+import { validateModel, getToken, getRoleId } from "../../helpers/UtilHelper";
 
 const alert = new AlertHelper();
 
@@ -119,6 +119,10 @@ export default {
         };
     },
     methods: {
+        reset() {
+            this.isLoading = false;
+            this.Password = "";
+        },
         login() {
             const vm = this;
             const requestData = {
@@ -135,14 +139,30 @@ export default {
                 function({ Values }) {
                     const info = JSON.stringify(Values);
                     window.localStorage.setItem("_tin", info);
-                    window.router.push("/admin/dashboard");
+
+                    AjaxService(
+                        {
+                            method: "GroupMenuGetAll",
+                            roleId: getRoleId(),
+                        },
+                        function({ Values }) {
+                            const menu = JSON.stringify(Values.Data);
+                            window.localStorage.setItem("_min", menu);
+                        },
+                        function(err) {
+                            alert.error(err);
+                        },
+                        function() {
+                            window.router.push("/admin/dashboard");
+                            vm.reset();
+                        },
+                    );
                 },
                 function(err) {
                     alert.error(err);
                 },
                 function() {
-                    vm.isLoading = false;
-                    vm.password = "";
+                    vm.reset();
                 },
             );
         },
