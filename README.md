@@ -1,7 +1,7 @@
 # admin-app-vue
 
 ## Demo (for a while)
-[link for demo](https://admin-dlhk-dev.web.app)
+[link for demo](https://admin-vue-js-v3.vercel.app)
 
 ## Project setup
 ```
