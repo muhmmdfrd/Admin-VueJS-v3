@@ -17,10 +17,7 @@ const epochToSqlDate = function (date) {
 }
 
 const epochCompare = function (date) {
-    const dateParams = epoch(date);
-    const dateNow = now();
-
-    return moment(dateParams).isSame(dateNow) || moment(dateParams).isAfter(dateNow);
+    return moment(epoch(date)).isAfter(now());
 }
 
 const dateDiff = function (date) {
