@@ -8,26 +8,24 @@
                 <router-link to="/admin/dashboard">Stisla</router-link>
             </div>
             <ul class="sidebar-menu">
-                <!-- dashboard -->
-                <title-menu-sidebar title="Dashboard" />
-                <menu-sidebar
-                    path="/admin/dashboard"
-                    icon="tachometer-alt"
-                    menuName="Dashboard"
-                />
-                <!-- end of dashboard -->
+                <template v-for="title in baseMenu" :key="title">
+                    <title-menu-sidebar :title="title.Name" />
+                    <template v-for="menu in title.Menus" :key="menu">
+                        <menu-sidebar
+                            :path="menu.Path"
+                            :icon="menu.Icon"
+                            :menuName="menu.Name"
+                        />
+                    </template>
+                </template>
 
-                <!-- layout -->
-                <title-menu-sidebar title="Manage" />
-                <menu-sidebar path="/admin/book" icon="book" menuName="Books" />
-                <menu-sidebar path="/admin/user" icon="user" menuName="Users" />
+                <!--
                 <dropdown-sidebar icon="archive" title="Transaction">
                     <dropdown-menu
                         path="/admin/transaction/borrowing"
                         title="Borrowing"
                     />
-                </dropdown-sidebar>
-                <!-- end of layout -->
+                </dropdown-sidebar> -->
             </ul>
         </aside>
     </div>
@@ -36,16 +34,25 @@
 <script>
 import MenuSidebar from "./MenuSidebar.vue";
 import TitleMenuSidebar from "./TitleMenuSidebar.vue";
-import DropdownSidebar from "./DropdownSidebar.vue";
-import DropdownMenu from "./DropdownMenu.vue";
+// import DropdownSidebar from "./DropdownSidebar.vue";
+// import DropdownMenu from "./DropdownMenu.vue";
+import { getMenu } from "../../helpers/UtilHelper";
 
 export default {
     name: "SideBar",
     components: {
         MenuSidebar,
         TitleMenuSidebar,
-        DropdownMenu,
-        DropdownSidebar,
+        // DropdownMenu,
+        // DropdownSidebar,
+    },
+    data: function() {
+        return {
+            baseMenu: [],
+        };
+    },
+    mounted: function() {
+        this.baseMenu = getMenu();
     },
 };
 </script>
