@@ -5,6 +5,7 @@
             class="btn btn-info"
             :value="getFormStatus"
             tabindex="5"
+            @click="click"
         />
     </div>
 </template>
@@ -16,6 +17,11 @@ export default {
     computed: {
         getFormStatus() {
             return getParamsId() === 0 ? "Create" : "Update";
+        },
+    },
+    methods: {
+        click() {
+            return this.$emit("click", this.click);
         },
     },
 };
