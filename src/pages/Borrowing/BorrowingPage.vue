@@ -118,13 +118,12 @@ export default {
                         {
                             field: "TotalPenalty",
                             render: function(data, row) {
+                                const total =
+                                    (data + 1) * dateDiff(row.Deadline) * 1000;
+
                                 return data == 0 && epochCompare(row.Deadline)
                                     ? "-"
-                                    : currency(
-                                          (data + 1) *
-                                              dateDiff(row.Deadline) *
-                                              1000,
-                                      );
+                                    : currency(total);
                             },
                         },
                     ];

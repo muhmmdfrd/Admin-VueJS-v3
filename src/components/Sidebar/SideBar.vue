@@ -9,23 +9,32 @@
             </div>
             <ul class="sidebar-menu">
                 <template v-for="title in baseMenu" :key="title">
-                    <title-menu-sidebar :title="title.Name" />
-                    <template v-for="menu in title.Menus" :key="menu">
-                        <menu-sidebar
-                            :path="menu.Path"
-                            :icon="menu.Icon"
-                            :menuName="menu.Name"
-                        />
+                    <!-- single menu -->
+                    <template v-if="!title.IsCollapse">
+                        <title-menu-sidebar :title="title.Name" />
+                        <template v-for="menu in title.Menus" :key="menu">
+                            <menu-sidebar
+                                :path="menu.Path"
+                                :icon="menu.Icon"
+                                :menuName="menu.Name"
+                            />
+                        </template>
                     </template>
-                </template>
+                    <!-- end of single menu -->
 
-                <!--
-                <dropdown-sidebar icon="archive" title="Transaction">
-                    <dropdown-menu
-                        path="/admin/transaction/borrowing"
-                        title="Borrowing"
-                    />
-                </dropdown-sidebar> -->
+                    <!-- collapse menu -->
+                    <template v-if="title.IsCollapse">
+                        <dropdown-sidebar icon="archive" :title="title.Name">
+                            <template v-for="menu in title.Menus" :key="menu">
+                                <dropdown-menu
+                                    :path="menu.Path"
+                                    :title="menu.Name"
+                                />
+                            </template>
+                        </dropdown-sidebar>
+                    </template>
+                    <!-- end of collapse menu -->
+                </template>
             </ul>
         </aside>
     </div>
@@ -34,8 +43,8 @@
 <script>
 import MenuSidebar from "./MenuSidebar.vue";
 import TitleMenuSidebar from "./TitleMenuSidebar.vue";
-// import DropdownSidebar from "./DropdownSidebar.vue";
-// import DropdownMenu from "./DropdownMenu.vue";
+import DropdownSidebar from "./DropdownSidebar.vue";
+import DropdownMenu from "./DropdownMenu.vue";
 import { getMenu } from "../../helpers/UtilHelper";
 
 export default {
@@ -43,8 +52,8 @@ export default {
     components: {
         MenuSidebar,
         TitleMenuSidebar,
-        // DropdownMenu,
-        // DropdownSidebar,
+        DropdownMenu,
+        DropdownSidebar,
     },
     data: function() {
         return {

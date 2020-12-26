@@ -11,6 +11,7 @@ import BookFormPage from "../pages/Book/BookFormPage.vue";
 import UserPage from '../pages/User/UserPage.vue';
 import UserFormPage from "../pages/User/UserFormPage.vue";
 import BorrowingPage from '../pages/Borrowing/BorrowingPage.vue';
+import RolePage from "../pages/Role/RolePage.vue";
 import App from "../App.vue";
 
 const listRoutes = [{
@@ -67,6 +68,14 @@ const listRoutes = [{
                 name: "borrowing",
                 components: {
                     admin: BorrowingPage
+                },
+                props: true
+            },
+            {
+                path: "role",
+                name: "role",
+                components: {
+                    admin: RolePage
                 },
                 props: true
             },

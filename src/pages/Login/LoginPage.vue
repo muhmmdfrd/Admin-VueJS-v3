@@ -146,7 +146,7 @@ export default {
                             roleId: getRoleId(),
                         },
                         function({ Values }) {
-                            const menu = JSON.stringify(Values.Data);
+                            const menu = JSON.stringify(Values);
                             window.localStorage.setItem("_min", menu);
                         },
                         function(err) {
