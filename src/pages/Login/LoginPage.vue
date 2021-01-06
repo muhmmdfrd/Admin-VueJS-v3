@@ -101,7 +101,7 @@ import AlertHelper from "../../helpers/AlertHelper";
 import logo from "../../assets/img/stisla-fill.svg";
 import $ from "jquery";
 import AjaxService from "../../services/AjaxService";
-import { validateModel, getToken, getRoleId } from "../../helpers/UtilHelper";
+import { validateModel, getToken } from "../../helpers/UtilHelper";
 
 const alert = new AlertHelper();
 
@@ -143,7 +143,6 @@ export default {
                     AjaxService(
                         {
                             method: "GroupMenuGetAll",
-                            roleId: getRoleId(),
                         },
                         function({ Values }) {
                             const menu = JSON.stringify(Values);

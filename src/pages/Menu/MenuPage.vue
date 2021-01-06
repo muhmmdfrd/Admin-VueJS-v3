@@ -1,13 +1,13 @@
 <template>
     <loading-component v-show="isLoading" />
     <div v-show="!isLoading">
-        <title-header title="Role" />
+        <title-header title="Menu" />
         <index-table
             :titleHeader="titles"
-            :dataBody="datas"
+            :dataBody="data"
+            :current="current"
             :configs="configs"
             :size="size"
-            :current="current"
             :add="add"
             @paging="onPaging"
             @keyword="onSearch"
@@ -28,25 +28,24 @@ const alert = new AlertHelper();
 
 export default {
     components: { TitleHeader, LoadingComponent, IndexTable },
-    name: "RolePage",
+    name: "MenuPage",
     data: function() {
         return {
             isLoading: false,
-            current: 1,
-            keyword: "",
-            datas: [],
+            data: [],
             titles: [],
-            size: 0,
             configs: [],
+            current: 1,
+            size: 0,
         };
     },
     methods: {
         async getData(current, keyword = "") {
             const vm = this;
             const requestData = {
-                method: "RoleGetAll",
-                pageIndex: current,
+                method: "MenuGetAll",
                 keyword: keyword,
+                pageIndex: current,
             };
 
             vm.isLoading = true;
@@ -54,15 +53,32 @@ export default {
             AjaxService(
                 requestData,
                 function({ Values }) {
-                    const { RecordsTotal, RecordsFilterred, Data } = Values;
+                    const { Data, RecordsFiltered, RecordsTotal } = Values;
 
-                    vm.titles = ["Role Name"];
-                    vm.datas = Data;
-                    vm.size =
-                        vm.keyword === "" ? RecordsTotal : RecordsFilterred;
+                    vm.titles = ["Name", "Path", "Icon", "Group Menu"];
+                    vm.data = Data;
+                    vm.size = keyword === "" ? RecordsTotal : RecordsFiltered;
                     vm.configs = [
                         {
                             field: "Name",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "Path",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "Icon",
+                            render: function(data) {
+                                return data === "" ? "-" : data;
+                            },
+                        },
+                        {
+                            field: "GroupMenuName",
                             render: function(data) {
                                 return data;
                             },
@@ -79,23 +95,22 @@ export default {
         },
         async deleteData(id) {
             const vm = this;
-
             alert.confirm(function(response) {
-                if (response === "yes") {
+                if (response == "yes") {
                     vm.isLoading = true;
 
                     const requestData = {
-                        method: "RoleDelete",
-                        id: id,
+                        method: "MenuDelete",
+                        Id: id,
                     };
 
                     AjaxService(
                         requestData,
-                        function(response) {
-                            alert.success(response.Message);
+                        function() {
+                            alert.success("data deleted");
                         },
                         function(err) {
-                            alert.err(err);
+                            alert.error(err);
                         },
                         function() {
                             vm.getData(vm.current);
@@ -112,15 +127,15 @@ export default {
             this.current = indexPage;
             this.getData(this.current);
         },
-        detail(id) {
-            window.router.push(`role/${id}`);
-        },
         add() {
-            window.router.push("role/0");
+            window.router.push("menu/0");
+        },
+        detail(id) {
+            window.router.push(`menu/${id}`);
         },
     },
     mounted: function() {
-        this.getData(this.current);
+        return this.getData(this.current);
     },
 };
 </script>

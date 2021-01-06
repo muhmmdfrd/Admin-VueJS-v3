@@ -37,11 +37,6 @@ const getParamsId = function () {
     const params = href.split('/');
     return Number(params.pop());
 }
-
-const removeArrOfObj = function (array, property) {
-    array.map((value) => delete value[property]);
-}
-
 const currency = function (data) {
     const result = new Intl.NumberFormat('en-IN', {
         style: 'currency',
@@ -59,6 +54,5 @@ export {
     getMenu,
     removeToken,
     getParamsId,
-    validateModel,
-    removeArrOfObj
+    validateModel
 }

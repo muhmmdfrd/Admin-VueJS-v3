@@ -12,6 +12,8 @@ import UserPage from '../pages/User/UserPage.vue';
 import UserFormPage from "../pages/User/UserFormPage.vue";
 import BorrowingPage from '../pages/Borrowing/BorrowingPage.vue';
 import RolePage from "../pages/Role/RolePage.vue";
+import RoleFormPage from "../pages/Role/RoleFormPage.vue";
+import MenuPage from "../pages/Menu/MenuPage.vue";
 import App from "../App.vue";
 
 const listRoutes = [{
@@ -76,6 +78,22 @@ const listRoutes = [{
                 name: "role",
                 components: {
                     admin: RolePage
+                },
+                props: true
+            },
+            {
+                path: "role/:id",
+                name: "role-form",
+                components: {
+                    admin: RoleFormPage
+                },
+                props: true
+            },
+            {
+                path: "menu",
+                name: "menu",
+                components: {
+                    admin: MenuPage
                 },
                 props: true
             },
