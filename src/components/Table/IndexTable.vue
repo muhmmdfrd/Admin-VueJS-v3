@@ -56,16 +56,12 @@
                                 <td class="text-center">
                                     <button
                                         class="btn btn-sm btn-info btn-action mr-1"
-                                        data-toggle="tooltip"
-                                        title="Edit data by id"
                                         @click.prevent="detail(data.Id)"
                                     >
                                         <i class="fa fa-pen"></i>&nbsp; Detail
                                     </button>
                                     <button
                                         class="btn btn-sm btn-danger btn-action mr-1"
-                                        data-toggle="tooltip"
-                                        title="Delete data by id."
                                         @click.prevent="deleteData(data.Id)"
                                     >
                                         <i class="fa fa-trash"></i>&nbsp; Delete

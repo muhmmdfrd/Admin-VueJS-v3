@@ -8,7 +8,10 @@
             :size="size"
             :titleHeader="titles"
             :configs="configs"
+            :add="add"
             @keyword="onSearch"
+            @paging="onPaging"
+            @detail="detail"
         />
     </div>
 </template>
@@ -37,9 +40,19 @@ export default {
         };
     },
     methods: {
+        add() {
+            window.router.push("borrowing/0");
+        },
+        detail(id) {
+            window.router.push(`borrowing/${id}`);
+        },
         onSearch(keyword) {
             this.current = 1;
             this.getData(this.current, keyword);
+        },
+        onPaging(index) {
+            this.current = index;
+            this.getData(this.current);
         },
         async getData(current, keyword = "") {
             const vm = this;
@@ -101,15 +114,31 @@ export default {
                         {
                             field: "IsPenalty",
                             render: function(data, row) {
-                                const result =
-                                    !data && epochCompare(row.Deadline)
-                                        ? "Active"
-                                        : "Expired";
+                                let result = "";
+                                let label = "";
 
-                                const label =
-                                    !data && epochCompare(row.Deadline)
-                                        ? "primary"
-                                        : "danger";
+                                switch (row.Status) {
+                                    case 1:
+                                        result = "Returned";
+                                        label = "success";
+                                        break;
+                                    case 2:
+                                        result = "Late";
+                                        label = "danger";
+                                        break;
+                                    default:
+                                        if (
+                                            data &&
+                                            !epochCompare(row.Deadline)
+                                        ) {
+                                            result = "Active";
+                                            label = "info";
+                                        } else {
+                                            result = "Expired";
+                                            label = "warning";
+                                        }
+                                        break;
+                                }
 
                                 return `<span class='badge badge-pill badge-${label}'>${result}</span>`;
                             },
@@ -118,12 +147,25 @@ export default {
                         {
                             field: "TotalPenalty",
                             render: function(data, row) {
-                                const total =
-                                    (data + 1) * dateDiff(row.Deadline) * 1000;
+                                let total = 0;
+                                let result = currency(0);
 
-                                return data == 0 && epochCompare(row.Deadline)
-                                    ? "-"
-                                    : currency(total);
+                                if (row.Status === 0) {
+                                    total =
+                                        (data + 1) *
+                                        dateDiff(row.Deadline) *
+                                        1000;
+
+                                    result =
+                                        data == undefined &&
+                                        !epochCompare(row.Deadline)
+                                            ? "-"
+                                            : currency(total);
+                                } else {
+                                    result = currency(data);
+                                }
+
+                                return result;
                             },
                         },
                     ];

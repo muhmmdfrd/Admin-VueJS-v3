@@ -140,10 +140,12 @@ export default {
                     const info = JSON.stringify(Values);
                     window.localStorage.setItem("_tin", info);
 
+                    const requestData = {
+                        method: "GroupMenuGetList",
+                    };
+
                     AjaxService(
-                        {
-                            method: "GroupMenuGetAll",
-                        },
+                        requestData,
                         function({ Values }) {
                             const menu = JSON.stringify(Values);
                             window.localStorage.setItem("_min", menu);

@@ -94,7 +94,15 @@
                 </div>
             </div>
         </form-body>
-        <submit-button @click.prevent="submit" />
+        <submit-button>
+            <input
+                type="submit"
+                class="btn btn-info"
+                :value="getFormStatus"
+                tabindex="2"
+                @click.prevent="submit"
+            />
+        </submit-button>
     </form-wrapper>
 </template>
 
@@ -175,6 +183,11 @@ export default {
     },
     mounted: function() {
         this.id === 0 ? (this.isLoading = false) : this.getData();
+    },
+    computed: {
+        getFormStatus() {
+            return this.id == 0 ? "Save" : "Update";
+        },
     },
 };
 </script>

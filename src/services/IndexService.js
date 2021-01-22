@@ -12,6 +12,8 @@ export default function httpRequest(data) {
     // get token and add exeption for login
     data.token = data.method == "Login" ? "null" : getToken();
 
+    const ssids = btoa(getToken());
+
     axios({
         method: 'POST',
         url: baseurl,
@@ -20,6 +22,7 @@ export default function httpRequest(data) {
             data
         },
         header: {
+            'Authorization': 'Bearer ' + ssids,
             'Access-Control-Allow-Credentials': true,
             'Access-Control-Allow-Methods': 'POST',
             'Access-Control-Allow-Headers': 'application/json',

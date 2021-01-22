@@ -70,8 +70,24 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" tabindex="5" v-model="model.Description"></textarea>
+                    </div>
+                </div>
+            </div>
         </form-body>
-        <submit-button @click.prevent="submit" />
+        <submit-button>
+            <input
+                type="submit"
+                class="btn btn-info"
+                :value="getFormStatus"
+                tabindex="5"
+                @click.prevent="submit"
+            />
+        </submit-button>
     </form-wrapper>
 </template>
 

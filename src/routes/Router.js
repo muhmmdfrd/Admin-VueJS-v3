@@ -11,9 +11,13 @@ import BookFormPage from "../pages/Book/BookFormPage.vue";
 import UserPage from '../pages/User/UserPage.vue';
 import UserFormPage from "../pages/User/UserFormPage.vue";
 import BorrowingPage from '../pages/Borrowing/BorrowingPage.vue';
+import BorrowingFormPage from '../pages/Borrowing/BorrowingFormPage.vue';
 import RolePage from "../pages/Role/RolePage.vue";
 import RoleFormPage from "../pages/Role/RoleFormPage.vue";
 import MenuPage from "../pages/Menu/MenuPage.vue";
+import MenuFormPage from "../pages/Menu/MenuFormPage.vue";
+import GroupMenuPage from "../pages/GroupMenu/GroupMenuPage.vue";
+import GroupMenuFormPage from "../pages/GroupMenu/GroupMenuFormPage.vue";
 import App from "../App.vue";
 
 const listRoutes = [{
@@ -74,6 +78,14 @@ const listRoutes = [{
                 props: true
             },
             {
+                path: "transaction/borrowing/:id",
+                name: "borrowing-form",
+                components: {
+                    admin: BorrowingFormPage
+                },
+                props: true
+            },
+            {
                 path: "role",
                 name: "role",
                 components: {
@@ -96,6 +108,28 @@ const listRoutes = [{
                     admin: MenuPage
                 },
                 props: true
+            },
+            {
+                path: "menu/:id",
+                name: "menu-form",
+                components: {
+                    admin: MenuFormPage
+                },
+                props: true
+            },
+            {
+                path: "group-menu",
+                name: "group-menu",
+                components: {
+                    admin: GroupMenuPage
+                }
+            },
+            {
+                path: "group-menu/:id",
+                name: "group-menu-form",
+                components: {
+                    admin: GroupMenuFormPage
+                }
             },
             {
                 path: ":catchAll(.*)",

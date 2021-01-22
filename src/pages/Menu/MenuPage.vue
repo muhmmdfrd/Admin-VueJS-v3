@@ -55,7 +55,13 @@ export default {
                 function({ Values }) {
                     const { Data, RecordsFiltered, RecordsTotal } = Values;
 
-                    vm.titles = ["Name", "Path", "Icon", "Group Menu"];
+                    vm.titles = [
+                        "Name",
+                        "Path",
+                        "Icon",
+                        "Group Menu",
+                        "Module",
+                    ];
                     vm.data = Data;
                     vm.size = keyword === "" ? RecordsTotal : RecordsFiltered;
                     vm.configs = [
@@ -79,6 +85,12 @@ export default {
                         },
                         {
                             field: "GroupMenuName",
+                            render: function(data) {
+                                return data;
+                            },
+                        },
+                        {
+                            field: "Module",
                             render: function(data) {
                                 return data;
                             },

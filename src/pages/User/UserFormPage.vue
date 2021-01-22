@@ -68,8 +68,35 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Role</label>
+                    <select
+                        class="form-control"
+                        required
+                        v-model="model.RoleId"
+                        tabindex="5"
+                    >
+                        <option
+                            v-for="role in formData"
+                            :key="role"
+                            :value="role.Id"
+                        >
+                            {{ role.Name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
         </form-body>
-        <submit-button @click.prevent="submit" />
+        <submit-button>
+            <input
+                type="submit"
+                class="btn btn-info"
+                :value="getFormStatus"
+                tabindex="6"
+                @click.prevent="submit"
+            />
+        </submit-button>
     </form-wrapper>
 </template>
 
@@ -103,9 +130,29 @@ export default {
         return {
             isLoading: false,
             model: {},
+            formData: [],
         };
     },
     methods: {
+        async getRole() {
+            const vm = this;
+            const requestData = {
+                method: "RoleGetAll",
+            };
+
+            AjaxService(
+                requestData,
+                function({ Values }) {
+                    vm.formData = Values.Data;
+                },
+                function(err) {
+                    alert.error(err);
+                },
+                function() {
+                    vm.isLoading = false;
+                },
+            );
+        },
         async getDataById() {
             const vm = this;
             const requestData = {
@@ -124,7 +171,7 @@ export default {
                     alert.error(err);
                 },
                 function() {
-                    vm.isLoading = false;
+                    vm.getRole();
                 },
             );
         },
@@ -163,7 +210,12 @@ export default {
         },
     },
     mounted: function() {
-        getParamsId() == 0 ? (this.isLoading = false) : this.getDataById();
+        if (getParamsId() == 0) {
+            this.isLoading = true;
+            this.getRole();
+        } else {
+            this.getDataById();
+        }
     },
 };
 </script>
